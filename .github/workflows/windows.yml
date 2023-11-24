@@ -1,0 +1,35 @@
+name: MID windows
+
+on:
+  # push:
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: cargo build --release
+    - name: Run tests
+      run: cargo test -- --nocapture
+    - name: Get csproduct UUID
+      run: wmic csproduct get UUID
+    - name: Get diskdrive serialnumber
+      run: wmic diskdrive get serialnumber
+    - name: Get bios serialnumber
+      run: wmic bios get serialnumber
+    - name: Get win32_baseboard serialnumber
+      run: wmic path win32_baseboard get serialnumber
+    - name: Get os serialnumber
+      run: wmic os get serialnumber
+    - name: Get cpu processorid
+      run: wmic cpu get processorid
+    - name: Get memorychip serialnumber
+      run: wmic memorychip get serialnumber
+    - name: Get softwarelicensingservice
+      run: wmic path softwarelicensingservice get OA3xOriginalProductKey
