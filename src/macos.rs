@@ -56,7 +56,7 @@ fn parse_and_push(output_str: &str, targets: &[&str], result: &mut Vec<String>) 
                 let parts: Vec<&str> = line.split(":").collect();
                 let value = parts[1].trim().to_string();
 
-                if target == "memory" || target == "cores" || target == "processors" {
+                if target == "memory" || target == "cores" || target.contains("speed") {
                     let parts: Vec<&str> = value.split_whitespace().collect();
 
                     if let Some(memory_or_cores) = parts.get(0) {
