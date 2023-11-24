@@ -9,8 +9,8 @@ pub enum MIDError {
     #[error("Error converting output to UTF-8")]
     Utf8Error(#[from] std::str::Utf8Error),
 
-    #[error("Result length does not match target length")]
-    ResultLengthMismatchError,
+    #[error("Empty result, no targets found")]
+    ResulEmptyError,
 }
 
 #[cfg(target_os = "linux")]
