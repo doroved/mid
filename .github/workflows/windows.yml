@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build
-      run: cargo build --release
+      run: cargo build --verbose
     - name: Run tests
       run: cargo test -- --nocapture
     - name: Get csproduct UUID
@@ -33,3 +33,5 @@ jobs:
       run: wmic memorychip get serialnumber
     - name: Get softwarelicensingservice
       run: wmic path softwarelicensingservice get OA3xOriginalProductKey
+    - name: Get MachineGuid
+      run: for /f "skip=2 tokens=3" %a in ('reg query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography /v MachineGuid') do @echo %a

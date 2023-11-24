@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build
-      run: cargo build --release
+      run: cargo build --verbose
     - name: Run tests
       run: cargo test -- --nocapture
     - name: Get system_profiler
