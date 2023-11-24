@@ -1,0 +1,32 @@
+name: MachineID Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Rust
+        uses: actions/setup-rust@v1
+        with:
+          toolchain: stable
+
+      - name: Build and test
+        run: |
+          cargo build --release
+          cargo test -- --nocapture
+
+      # - name: Deploy to crates.io
+      #   run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
+      #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
