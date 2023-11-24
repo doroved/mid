@@ -33,5 +33,9 @@ jobs:
       run: wmic memorychip get serialnumber
     - name: Get softwarelicensingservice
       run: wmic path softwarelicensingservice get OA3xOriginalProductKey
+    # - name: Get MachineGuid
+    #   run: for /f "skip=2 tokens=3" %a in ('reg query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography /v MachineGuid') do @echo %a
     - name: Get MachineGuid
-      run: for /f "skip=2 tokens=3" %a in ('reg query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography /v MachineGuid') do @echo %a
+      run: |
+       $MachineGuid = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Cryptography" -Name "MachineGuid").MachineGuid
+       Write-Output $MachineGuid
