@@ -2,8 +2,9 @@ name: MachineID Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -14,18 +15,11 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Rust
-        uses: actions/setup-rust@v1
-        with:
-          toolchain: stable
-
-      - name: Build and test
-        run: |
-          cargo build --release
-          cargo test -- --nocapture
+    - uses: actions/checkout@v3
+    - name: Build
+      run: cargo build --release
+    - name: Run tests
+      run: cargo test -- --nocapture
 
       # - name: Deploy to crates.io
       #   run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
