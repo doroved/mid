@@ -20,6 +20,9 @@ jobs:
       run: cargo build --release
     - name: Run tests
       run: cargo test -- --nocapture
+    - name: Check SPHardwareDataType
+      if: startsWith(matrix.os, 'macos-')
+      run: system_profiler SPHardwareDataType
 
       # - name: Deploy to crates.io
       #   run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
