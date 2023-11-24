@@ -13,6 +13,8 @@ pub(crate) fn get_mid_string() -> Result<String, MIDError> {
     let system_profiler_output_str = str::from_utf8(&system_profiler_output.stdout)?;
 
     let targets = [
+        "Model Name",
+        "Model Identifier",
         "Model Number",
         "Chip",
         "Cores",
@@ -26,17 +28,13 @@ pub(crate) fn get_mid_string() -> Result<String, MIDError> {
 
     parse_and_push(&system_profiler_output_str, &targets, &mut result);
 
-    // if result.len() != targets.len() {
-    //     return Err(MIDError::ResultLengthMismatchError);
-    // }
-
     if result.is_empty() {
         return Err(MIDError::ResulEmptyError);
     }
 
     println!("MID result: {:?}", result);
 
-    let combined_string = result.join(",");
+    let combined_string = result.join("|");
 
     Ok(combined_string)
 }

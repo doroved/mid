@@ -30,7 +30,6 @@ pub fn get(key: &str) -> Result<String, MIDError> {
     }
 }
 
-// cargo test -- --nocapture
 #[test]
 fn machineid() {
     match get("mykey") {
