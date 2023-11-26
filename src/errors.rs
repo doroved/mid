@@ -1,40 +1,27 @@
-use thiserror::Error;
+use std::error::Error;
+use std::fmt;
 
-#[cfg(target_os = "macos")]
-#[derive(Error, Debug)]
+#[derive(Debug)]
 pub enum MIDError {
-    #[error("Command 'system_profiler' not found")]
-    CommandError(#[from] std::io::Error),
-
-    #[error("Error converting output to UTF-8")]
-    Utf8Error(#[from] std::str::Utf8Error),
-
-    #[error("Empty result, no targets found")]
-    ResulEmptyError,
-}
-
-#[cfg(target_os = "linux")]
-#[derive(Error, Debug)]
-pub enum MIDError {
-    #[error("Command 'cat /etc/machine-id' not found")]
-    CommandError(#[from] std::io::Error),
-
-    #[error("Error converting output to UTF-8")]
-    Utf8Error(#[from] std::str::Utf8Error),
-
-    #[error("Machine ID length does not match the required length")]
+    ExecuteProcessError(std::io::Error),
+    ParseError(std::string::FromUtf8Error),
     InvalidMachineIDLengthError,
 }
 
-#[cfg(target_os = "windows")]
-#[derive(Error, Debug)]
-pub enum MIDError {
-    #[error("Command 'wmic csproduct get UUID' not found")]
-    CommandError(#[from] std::io::Error),
+impl Error for MIDError {}
 
-    #[error("Error converting output to UTF-8")]
-    Utf8Error(#[from] std::str::Utf8Error),
-
-    #[error("Machine ID length does not match the required length")]
-    InvalidMachineIDLengthError,
+impl fmt::Display for MIDError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            MIDError::ExecuteProcessError(e) => {
+                write!(f, "Failed to execute process: {}", e)
+            }
+            MIDError::ParseError(e) => {
+                write!(f, "Error converting output to UTF-8: {}", e)
+            }
+            MIDError::InvalidMachineIDLengthError => {
+                write!(f, "Machine ID length does not match the required length")
+            }
+        }
+    }
 }
