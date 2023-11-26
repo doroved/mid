@@ -41,10 +41,9 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
 fn parse_and_push(output_str: &str, result: &mut Vec<String>) {
     if let Some(second_line) = output_str.lines().nth(1) {
         let trimmed_lower = second_line.trim().to_lowercase();
-        result.push(trimmed_lower);
 
-        // if !trimmed_lower.is_empty() {
-        //     result.push(trimmed_lower);
-        // }
+        if !trimmed_lower.is_empty() {
+            result.push(trimmed_lower);
+        }
     }
 }
