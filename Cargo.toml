@@ -13,4 +13,3 @@ categories = ["authentication", "config", "accessibility"]
 [dependencies]
 hex = "0.4.3"
 ring = "0.17.5"
-thiserror = "1.0.50"

@@ -2,23 +2,19 @@
 use crate::errors::MIDError;
 
 #[cfg(target_os = "macos")]
-use std::{process::Command, str};
+use crate::utils::run_shell_comand;
 
 #[cfg(target_os = "macos")]
-pub(crate) fn get_mid_string() -> Result<String, MIDError> {
-    let system_profiler_output = Command::new("system_profiler")
-        .arg("SPHardwareDataType")
-        .output()?;
-
-    let system_profiler_output_str = str::from_utf8(&system_profiler_output.stdout)?;
+pub(crate) fn get_mid_result() -> Result<String, MIDError> {
+    let system_profiler_output = run_shell_comand("system_profiler", ["SPHardwareDataType"])?;
 
     let targets = [
         "Model Name",
         "Model Identifier",
+        "Model Number",
         "Processor Name",
         "Processor Speed",
         "Number of Processors",
-        "Model Number",
         "Chip",
         "Cores",
         "Memory",
@@ -29,11 +25,7 @@ pub(crate) fn get_mid_string() -> Result<String, MIDError> {
 
     let mut result = Vec::new();
 
-    parse_and_push(&system_profiler_output_str, &targets, &mut result);
-
-    if result.is_empty() {
-        return Err(MIDError::ResulEmptyError);
-    }
+    parse_and_push(&system_profiler_output, &targets, &mut result);
 
     println!("MID result: {:?}", result);
 

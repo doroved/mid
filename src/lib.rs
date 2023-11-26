@@ -1,20 +1,34 @@
 mod errors;
 mod linux;
 mod macos;
+mod utils;
 mod windows;
 
 use errors::MIDError;
 use ring::hmac;
 
 #[cfg(target_os = "linux")]
-use linux::get_mid_string;
+use linux::get_mid_result;
 #[cfg(target_os = "macos")]
-use macos::get_mid_string;
+use macos::get_mid_result;
 #[cfg(target_os = "windows")]
-use windows::get_mid_string;
+use windows::get_mid_result;
 
+/// Retrieves raw format of UUID retrieval.
+///
+/// # Examples
+///
+/// ```
+/// #[cfg(any(macos))]
+/// let untransformed = machine_uuid::get_via_windows_shell();
+///
+/// // c:\ wmic csproduct get UUID
+/// // UUID
+/// // 140EF834-2DB3-0F7A-27B4-4CEDFB73167C
+///
+/// ```
 pub fn get(key: &str) -> Result<String, MIDError> {
-    match get_mid_string() {
+    match get_mid_result() {
         Ok(mid) => {
             let mid_bytes = mid.as_bytes();
 
@@ -31,7 +45,7 @@ pub fn get(key: &str) -> Result<String, MIDError> {
 }
 
 #[test]
-fn machineid() {
+fn mid_info() {
     match get("mykey") {
         Ok(_) => {}
         Err(err) => println!("MID error: {}", err.to_string()),

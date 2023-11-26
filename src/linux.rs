@@ -2,18 +2,17 @@
 use crate::errors::MIDError;
 
 #[cfg(target_os = "linux")]
-use std::{process::Command, str};
+use crate::utils::run_shell_comand;
 
 #[cfg(target_os = "linux")]
-pub(crate) fn get_mid_string() -> Result<String, MIDError> {
-    let mid_output = Command::new("cat").arg("/etc/machine-id").output()?;
-    let mid_output_string = str::from_utf8(&mid_output.stdout)?;
+pub(crate) fn get_mid_result() -> Result<String, MIDError> {
+    let machine_output = run_shell_comand("cat", ["/etc/machine-id"])?;
 
-    if mid_output_string.trim().len() != 32 {
+    if machine_output.trim().len() != 32 {
         return Err(MIDError::InvalidMachineIDLengthError);
     }
 
-    println!("MID result: {}", mid_output_string.to_lowercase());
+    println!("MID result: {}", machine_output.to_lowercase());
 
-    Ok(mid_output_string.to_lowercase())
+    Ok(machine_output.to_lowercase())
 }
