@@ -32,6 +32,7 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     println!("MID result: {:?}", result);
 
     let combined_string = result.join("|");
+    println!("combined_string: {}", combined_string);
 
     Ok(combined_string)
 }
