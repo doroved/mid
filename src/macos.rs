@@ -43,12 +43,10 @@ fn parse_and_push(output_str: &str, targets: &[&str], result: &mut Vec<String>) 
     let lines: Vec<&str> = output_str.lines().collect();
 
     for target in targets {
-        let target = target.to_lowercase();
-
         for line in &lines {
             let line = line.to_lowercase();
 
-            if line.contains(&target) {
+            if line.contains(&target.to_lowercase()) {
                 let parts: Vec<&str> = line.split(":").collect();
                 let value = parts[1].trim().to_string();
 
