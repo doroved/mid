@@ -19,7 +19,9 @@ jobs:
         run: cargo test -- --nocapture
       - name: Get /etc/machine-id
         run: cat /etc/machine-id
-      - name: Get dmidecode
-        run: dmidecode -t system
+      - name: Get lshw
+        run: lshw
       - name: Get sudo dmidecode
         run: sudo dmidecode -t system
+      - name: Get dmidecode
+        run: dmidecode -t system
