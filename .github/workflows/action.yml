@@ -2,9 +2,9 @@ name: MID all
 
 on:
   # push:
-    # branches: [ "main" ]
+  # branches: [ "main" ]
   # pull_request:
-    # branches: [ "main" ] 
+  # branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -16,12 +16,8 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test -- --nocapture
-
-      # - name: Deploy to crates.io
-      #   run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
-      #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - uses: actions/checkout@v3
+      - name: Build
+        run: cargo build --verbose
+      - name: Run tests
+        run: cargo test -- --nocapture
