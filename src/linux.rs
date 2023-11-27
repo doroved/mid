@@ -9,8 +9,8 @@ use crate::utils::run_shell_comand;
 
 #[cfg(target_os = "linux")]
 pub(crate) fn get_mid_result() -> Result<String, MIDError> {
-    // let machine_output = run_shell_comand("cat", ["/etc/machine-id"])?;
-    // let machine_id = machine_output.trim().to_lowercase();
+    let machine_output = run_shell_comand("cat", ["/etc/machine-id"])?;
+    let machine_id = machine_output.trim().to_lowercase();
 
     let dmidecode_output = run_shell_comand("dmidecode", ["-t", "system"])?;
 
@@ -18,6 +18,7 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
 
     let mut result = Vec::new();
 
+    result.push(machine_id);
     parse_and_push(&dmidecode_output, &targets, &mut result);
 
     if result.is_empty() {
