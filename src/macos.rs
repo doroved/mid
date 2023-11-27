@@ -38,6 +38,7 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     Ok(combined_string)
 }
 
+#[cfg(target_os = "macos")]
 fn parse_and_push(output_str: &str, targets: &[&str], result: &mut Vec<String>) {
     let lines: Vec<&str> = output_str.lines().collect();
 
