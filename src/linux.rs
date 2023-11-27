@@ -12,7 +12,7 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let machine_output = run_shell_comand("cat", ["/etc/machine-id"])?;
     let machine_id = machine_output.trim().to_lowercase();
 
-    let dmidecode_output = run_shell_comand("dmidecode", ["-t", "system"])?;
+    let dmidecode_output = run_shell_comand("sudo dmidecode", ["-t", "system"])?;
 
     let targets = ["Serial Number", "UUID"];
 
