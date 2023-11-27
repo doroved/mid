@@ -7,12 +7,9 @@ use crate::utils::run_shell_comand;
 #[cfg(target_os = "linux")]
 pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let machine_output = run_shell_comand("cat", ["/etc/machine-id"])?;
+    let machine_id = machine_output.trim().to_lowercase();
 
-    if machine_output.trim().len() != 32 {
-        return Err(MIDError::InvalidMachineIDLengthError);
-    }
+    println!("MID result: {}", machine_id);
 
-    println!("MID result: {}", machine_output.to_lowercase());
-
-    Ok(machine_output.to_lowercase())
+    Ok(machine_id)
 }

@@ -5,7 +5,7 @@ use std::fmt;
 pub enum MIDError {
     ExecuteProcessError(std::io::Error),
     ParseError(std::string::FromUtf8Error),
-    ResultWindowsMidError,
+    ResultMidError,
 }
 
 impl Error for MIDError {}
@@ -19,8 +19,8 @@ impl fmt::Display for MIDError {
             MIDError::ParseError(e) => {
                 write!(f, "Error converting output to UTF-8: {}", e)
             }
-            MIDError::ResultWindowsMidError => {
-                write!(f, "Empty result windows machine ID")
+            MIDError::ResultMidError => {
+                write!(f, "Empty result machine ID")
             }
         }
     }

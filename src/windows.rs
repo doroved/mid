@@ -8,8 +8,6 @@ use crate::utils::run_shell_comand;
 pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let csproduct_output =
         run_shell_comand("wmic", ["csproduct", "get", "UUID"]).unwrap_or("".into());
-    let diskdrive_output =
-        run_shell_comand("wmic", ["diskdrive", "get", "serialnumber"]).unwrap_or("".into());
     let bios_output =
         run_shell_comand("wmic", ["bios", "get", "serialnumber"]).unwrap_or("".into());
     let baseboard_output =
@@ -20,19 +18,17 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let mut result = Vec::new();
 
     parse_and_push(&csproduct_output, &mut result);
-    parse_and_push(&diskdrive_output, &mut result);
     parse_and_push(&bios_output, &mut result);
     parse_and_push(&baseboard_output, &mut result);
     parse_and_push(&cpu_output, &mut result);
 
     if result.is_empty() {
-        return Err(MIDError::ResultWindowsMidError);
+        return Err(MIDError::ResultMidError);
     }
 
     println!("MID result: {:?}", result);
 
     let combined_string = result.join("|");
-    println!("combined_string: {}", combined_string);
 
     Ok(combined_string)
 }
