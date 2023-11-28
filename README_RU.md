@@ -68,13 +68,13 @@ cargo add mid
 
 ## Как использовать
 
-Простой пример:
+Максимально просто
 
 ```rust
 let machine_id = mid::get("mykey").unwrap();
 ```
 
-Обработка ошибки
+Использование в функции с обработкой ошибки
 
 ```rust
 fn get_machine_id() -> Result<String, String> {
