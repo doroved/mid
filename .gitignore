@@ -2,6 +2,3 @@ target
 Cargo.lock
 .vscode
 .env
-
-links.txt
-README.md
