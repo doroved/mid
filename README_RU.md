@@ -91,6 +91,11 @@ fn get_machine_id() -> Result<String, String> {
 }
 ```
 
+### Подписывайтесь на мой Х
+
+Здесь я буду делиться своими разработками и проектами
+https://x.com/doroved
+
 ### Ссылки
 
 - [machineid-rs](https://github.com/Taptiive/machineid-rs)

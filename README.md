@@ -93,6 +93,11 @@ fn get_machine_id() -> Result<String, String> {
 }
 ```
 
+### Subscribe to my X
+
+Here I will share my developments and projects
+https://x.com/doroved
+
 ### Links
 
 - [machineid-rs](https://github.com/Taptiive/machineid-rs)
