@@ -1,4 +1,4 @@
-//! Obtaining a unique device identifier for MacOS/Linux/Windows.
+//! Creating a Machine ID for MacOS/Linux/Windows.
 //!
 //! ```
 //! let machine_id = mid::get("mykey").unwrap();

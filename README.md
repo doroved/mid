@@ -8,7 +8,7 @@
 
 ## MachineID for Rust
 
-Obtain a unique hashed identifier for your MacOS/Linux/Windows-based device.
+Creating a Machine ID for MacOS/Linux/Windows.
 
 An excellent solution for licensing your programs, which uses maximally static and mostly immutable data.
 
