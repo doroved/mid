@@ -1,6 +1,6 @@
 [package]
 name = "mid"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 authors = ["doroved"]
 description = "Obtaining a unique device identifier for MacOS/Linux/Windows"
