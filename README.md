@@ -41,7 +41,7 @@ The command returns information about the Secure Element. This element is used t
 
 ### Linux
 
-- `cat /etc/machine-id`: Returns the machine identifier (ID) used for unique identification of the computer in Linux systems.
+- `cat /etc/machine-id`: Returns the machine identifier (ID) used for unique identification of the computer in Linux systems. Unfortunately, this parameter is subject to change, and a reliable solution for Linux has not been found yet.
 
 ### Windows
 
