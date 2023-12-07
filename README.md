@@ -20,7 +20,7 @@ Next, get acquainted with the parameters we use on each platform.
 system_profiler SPHardwareDataType
 ```
 
-The command returns information about the computer's hardware characteristics. Parameters used:
+The [command](https://ss64.com/osx/system_profiler.html) returns information about the computer's hardware characteristics. Parameters used:
 
 - **Model Number**: This parameter represents the computer or device model number. It is used for uniquely identifying a specific model within the manufacturer's range.
 
@@ -44,6 +44,8 @@ The command returns information about the Secure Element. This element is used t
 - `cat /etc/machine-id`: Returns the machine identifier (ID) used for unique identification of the computer in Linux systems. Unfortunately, this parameter is subject to change, and a reliable solution for Linux has not been found yet.
 
 ### Windows
+
+[WMIC](https://ss64.com/nt/wmic.html) - Windows Management Instrumentation Command.
 
 - `wmic csproduct get UUID`: Returns the unique product identifier (UUID) of the computer. Usually associated with the computer's motherboard. In rare cases, it may change after replacing or reinstalling the motherboard or after changing the device's BIOS/UEFI.
 
