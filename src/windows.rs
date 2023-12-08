@@ -6,14 +6,41 @@ use crate::utils::run_shell_comand;
 
 #[cfg(target_os = "windows")]
 pub(crate) fn get_mid_result() -> Result<String, MIDError> {
-    let csproduct_output =
-        run_shell_comand("wmic", ["csproduct", "get", "UUID"]).unwrap_or("".into());
-    let bios_output =
-        run_shell_comand("wmic", ["bios", "get", "serialnumber"]).unwrap_or("".into());
-    let baseboard_output =
-        run_shell_comand("wmic", ["path", "win32_baseboard", "get", "serialnumber"])
-            .unwrap_or("".into());
-    let cpu_output = run_shell_comand("wmic", ["cpu", "get", "processorid"]).unwrap_or("".into());
+    let csproduct_output = run_shell_comand(
+        "powershell",
+        [
+            "-command",
+            r#"Get-WmiObject Win32_ComputerSystemProduct | Select-Object -ExpandProperty UUID"#,
+        ],
+    )
+    .unwrap_or("".into());
+
+    let bios_output = run_shell_comand(
+        "powershell",
+        [
+            "-command",
+            r#"Get-WmiObject Win32_BIOS | Select-Object -ExpandProperty SerialNumber"#,
+        ],
+    )
+    .unwrap_or("".into());
+
+    let baseboard_output = run_shell_comand(
+        "powershell",
+        [
+            "-command",
+            r#"Get-WmiObject Win32_BaseBoard | Select-Object -ExpandProperty SerialNumber"#,
+        ],
+    )
+    .unwrap_or("".into());
+
+    let cpu_output = run_shell_comand(
+        "powershell",
+        [
+            "-command",
+            r#"Get-WmiObject Win32_Processor | Select-Object -ExpandProperty ProcessorId"#,
+        ],
+    )
+    .unwrap_or("".into());
 
     let mut result = Vec::new();
 
@@ -35,11 +62,9 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
 
 #[cfg(target_os = "windows")]
 fn parse_and_push(output_str: &str, result: &mut Vec<String>) {
-    if let Some(second_line) = output_str.lines().nth(1) {
-        let trimmed_lower = second_line.trim().to_lowercase();
+    let trimmed_lower = output_str.trim().to_lowercase();
 
-        if !trimmed_lower.is_empty() {
-            result.push(trimmed_lower);
-        }
+    if !trimmed_lower.is_empty() {
+        result.push(trimmed_lower);
     }
 }
