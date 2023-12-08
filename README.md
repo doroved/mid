@@ -41,19 +41,23 @@ The command returns information about the Secure Element. This element is used t
 
 ### Linux
 
-- `cat /etc/machine-id`: Returns the machine identifier (ID) used for unique identification of the computer in Linux systems. Unfortunately, this parameter is subject to change, and a reliable solution for Linux has not been found yet.
+- `cat /etc/machine-id`: Returns the machine identifier (ID) used for unique identification of the computer in Linux systems. **Unfortunately, this parameter is subject to change, and a reliable solution for Linux has not been found yet.**
 
 ### Windows
 
 [WMIC](https://ss64.com/nt/wmic.html) - Windows Management Instrumentation Command.
 
-- `wmic csproduct get UUID`: Returns the unique product identifier (UUID) of the computer. Usually associated with the computer's motherboard. In rare cases, it may change after replacing or reinstalling the motherboard or after changing the device's BIOS/UEFI.
+> The WMIC tool is [deprecated](https://arc.net/l/quote/zgcodjij) in Windows 10, version 21H1 and the 21H1 semi-annual channel release of Windows Server.
 
-- `wmic bios get serialnumber`: Returns the computer's BIOS serial number. It usually remains constant and does not change.
+Now all commands are invoked via PowerShell.
 
-- `wmic path win32_baseboard get serialnumber`: Returns the serial number of the computer's baseboard. It usually remains constant and does not change.
+- ~~wmic csproduct get UUID~~ `powershell -command "Get-WmiObject Win32_ComputerSystemProduct"`: Returns the unique product identifier (UUID) of the computer. Usually associated with the computer's motherboard. In rare cases, it may change after replacing or reinstalling the motherboard or after changing the device's BIOS/UEFI.
 
-- `wmic cpu get processorid`: Returns the computer's processor identifier. It should remain unchanged, except in cases of processor replacement.
+- ~~wmic bios get serialnumber~~ `powershell -command "Get-WmiObject Win32_BIOS"`: Returns the computer's BIOS serial number. It usually remains constant and does not change.
+
+- ~~wmic path win32_baseboard get serialnumber~~ `powershell -command "Get-WmiObject Win32_BaseBoard"`: Returns the serial number of the computer's baseboard. It usually remains constant and does not change.
+
+- ~~wmic cpu get processorid~~ `powershell -command "Get-WmiObject Win32_Processor"`: Returns the computer's processor identifier. It should remain unchanged, except in cases of processor replacement.
 
 ## Installation
 
@@ -61,7 +65,7 @@ Add the dependency to Cargo.toml
 
 ```toml
 [dependencies]
-mid = "1.0.0"
+mid = "1.1.0"
 ```
 
 Or install using Cargo CLI
@@ -82,7 +86,7 @@ Usage in a function with error handling
 
 ```rust
 fn get_machine_id() -> Result<String, String> {
-    // openssl rand -hex 32
+    // Generate a key on macOS/Linux with: openssl rand -hex 32
     let key = "293273abaf6fcb31d4a9b47b70a20b21133ff08852834c52c5f42ed8153b274a";
 
     match mid::get(key) {
@@ -100,7 +104,7 @@ fn get_machine_id() -> Result<String, String> {
 Here I will share my developments and projects
 https://x.com/doroved
 
-### Links
+### References
 
 - [machineid-rs](https://github.com/Taptiive/machineid-rs)
 - [machine_uuid](https://github.com/choicesourcing/machine_uuid)

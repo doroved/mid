@@ -39,19 +39,23 @@ system_profiler SPSecureElementDataType
 
 ### Linux
 
-- `cat /etc/machine-id`: Возвращает идентификатор (ID) машины, который используется для уникальной идентификации компьютера в Linux системах. К сожалению, этот параметр подвержен изменениям, и пока не найдено надежного решения для Linux.
+- `cat /etc/machine-id`: Возвращает идентификатор (ID) машины, который используется для уникальной идентификации компьютера в Linux системах. **К сожалению, этот параметр подвержен изменениям, и пока не найдено надежного решения для Linux**.
 
 ### Windows
 
 [WMIC](https://ss64.com/nt/wmic.html) - Windows Management Instrumentation Command.
 
-- `wmic csproduct get UUID`: Возвращает уникальный идентификатор (UUID) продукта компьютера. Обычно связан с материнской платой компьютера. В редких случаях он может измениться после замены или переустановки материнской платы или после изменения BIOS/UEFI на устройстве.
+> Инструмент WMIC [устарел](https://arc.net/l/quote/zgcodjij) в Windows 10, версии 21H1 и полугодовом канальном выпуске 21H1 для Windows Server.
 
-- `wmic bios get serialnumber`: Возвращает серийный номер BIOS компьютера. Обычно остается постоянным и не подлежит изменению.
+Теперь все команды вызываются через PowerShell.
 
-- `wmic path win32_baseboard get serialnumber`: Возвращает серийный номер базовой платы компьютера. Обычно остается постоянным и не подлежит изменению.
+- ~~wmic csproduct get UUID~~ `powershell -command "Get-WmiObject Win32_ComputerSystemProduct"`: Возвращает уникальный идентификатор (UUID) продукта компьютера. Обычно связан с материнской платой компьютера. В редких случаях он может измениться после замены или переустановки материнской платы или после изменения BIOS/UEFI на устройстве.
 
-- `wmic cpu get processorid`: Возвращает идентификатор процессора компьютера. Должен оставаться неизменным, за исключением случаев замены процессора.
+- ~~wmic bios get serialnumber~~ `powershell -command "Get-WmiObject Win32_BIOS"`: Возвращает серийный номер BIOS компьютера. Обычно остается постоянным и не подлежит изменению.
+
+- ~~wmic path win32_baseboard get serialnumber~~ `powershell -command "Get-WmiObject Win32_BaseBoard"`: Возвращает серийный номер базовой платы компьютера. Обычно остается постоянным и не подлежит изменению.
+
+- ~~wmic cpu get processorid~~ `powershell -command "Get-WmiObject Win32_Processor"`: Возвращает идентификатор процессора компьютера. Должен оставаться неизменным, за исключением случаев замены процессора.
 
 ## Как установить
 
@@ -59,7 +63,7 @@ system_profiler SPSecureElementDataType
 
 ```toml
 [dependencies]
-mid = "1.0.0"
+mid = "1.1.0"
 ```
 
 Или установить с помощью Cargo CLI
@@ -80,7 +84,7 @@ let machine_id = mid::get("mykey").unwrap();
 
 ```rust
 fn get_machine_id() -> Result<String, String> {
-    // openssl rand -hex 32
+    // Сгенерируйте ключ на macOS/Linux с помощью: openssl rand -hex 32
     let key = "293273abaf6fcb31d4a9b47b70a20b21133ff08852834c52c5f42ed8153b274a";
 
     match mid::get(key) {
