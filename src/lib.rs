@@ -51,18 +51,38 @@ pub fn get(key: &str) -> Result<String, MIDError> {
             let signature = hmac::sign(&hmac_key, mid_bytes);
             let signature_hex = hex::encode(signature.as_ref());
 
-            println!("MID hash: {}", signature_hex);
-
             Ok(signature_hex)
         }
         Err(err) => Err(err),
     }
 }
 
+/// Display MID result/hash in the console.
+///
+/// `MID result` - array of OS parameters
+///
+/// `MID hash` - SHA-256 hash from result
+pub fn print_mid(key: &str) {
+    match get_mid_result() {
+        Ok(mid) => {
+            let mid_result: Vec<String> = mid.split('|').map(|s| s.to_string()).collect();
+            let mid_bytes = mid.as_bytes();
+
+            let hmac_key = hmac::Key::new(hmac::HMAC_SHA256, key.as_bytes());
+            let signature = hmac::sign(&hmac_key, mid_bytes);
+            let mid_hash = hex::encode(signature.as_ref());
+
+            println!("MID result: {:?}", mid_result);
+            println!("MID hash: {}", mid_hash);
+        }
+        Err(_) => {}
+    }
+}
+
 #[test]
 fn mid_info() {
     match get("mykey") {
-        Ok(_) => {}
+        Ok(_) => print_mid("mykey"),
         Err(err) => println!("MID error: {}", err.to_string()),
     }
 }

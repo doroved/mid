@@ -97,6 +97,15 @@ fn get_machine_id() -> Result<String, String> {
 }
 ```
 
+Так же можно вывести в консоль MID result/hash
+
+- `MID result` - массив параметров OS
+- `MID hash` - хеш SHA-256 от result
+
+```rust
+mid::print_mid("mykey");
+```
+
 ### Подписывайтесь на мой Х
 
 Здесь я буду делиться своими разработками и проектами
