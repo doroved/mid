@@ -49,13 +49,13 @@ system_profiler SPSecureElementDataType
 
 Теперь все команды вызываются через PowerShell.
 
-- ~~wmic csproduct get UUID~~ `powershell -command "Get-WmiObject Win32_ComputerSystemProduct"`: Возвращает уникальный идентификатор (UUID) продукта компьютера. Обычно связан с материнской платой компьютера. В редких случаях он может измениться после замены или переустановки материнской платы или после изменения BIOS/UEFI на устройстве.
+- ~~wmic csproduct get UUID~~ `powershell -WindowStyle Hidden -command "Get-WmiObject Win32_ComputerSystemProduct"`: Возвращает уникальный идентификатор (UUID) продукта компьютера. Обычно связан с материнской платой компьютера. В редких случаях он может измениться после замены или переустановки материнской платы или после изменения BIOS/UEFI на устройстве.
 
-- ~~wmic bios get serialnumber~~ `powershell -command "Get-WmiObject Win32_BIOS"`: Возвращает серийный номер BIOS компьютера. Обычно остается постоянным и не подлежит изменению.
+- ~~wmic bios get serialnumber~~ `powershell -WindowStyle Hidden -command "Get-WmiObject Win32_BIOS"`: Возвращает серийный номер BIOS компьютера. Обычно остается постоянным и не подлежит изменению.
 
-- ~~wmic path win32_baseboard get serialnumber~~ `powershell -command "Get-WmiObject Win32_BaseBoard"`: Возвращает серийный номер базовой платы компьютера. Обычно остается постоянным и не подлежит изменению.
+- ~~wmic path win32_baseboard get serialnumber~~ `powershell -WindowStyle Hidden -command "Get-WmiObject Win32_BaseBoard"`: Возвращает серийный номер базовой платы компьютера. Обычно остается постоянным и не подлежит изменению.
 
-- ~~wmic cpu get processorid~~ `powershell -command "Get-WmiObject Win32_Processor"`: Возвращает идентификатор процессора компьютера. Должен оставаться неизменным, за исключением случаев замены процессора.
+- ~~wmic cpu get processorid~~ `powershell -WindowStyle Hidden -command "Get-WmiObject Win32_Processor"`: Возвращает идентификатор процессора компьютера. Должен оставаться неизменным, за исключением случаев замены процессора.
 
 ## Как установить
 
