@@ -63,7 +63,7 @@ system_profiler SPSecureElementDataType
 
 ```toml
 [dependencies]
-mid = "1.1.1"
+mid = "1.1.2"
 ```
 
 Или установить с помощью Cargo CLI
@@ -103,7 +103,7 @@ fn get_machine_id() -> Result<String, String> {
 - `MID hash` - хеш SHA-256 от result
 
 ```rust
-mid::print_mid("mykey");
+mid::print("mykey");
 ```
 
 ### Подписывайтесь на мой Х

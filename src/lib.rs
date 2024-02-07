@@ -11,7 +11,7 @@ mod utils;
 mod windows;
 
 use errors::MIDError;
-use ring::hmac;
+use hmac_sha256::HMAC;
 
 #[cfg(target_os = "linux")]
 use linux::get_mid_result;
@@ -45,13 +45,10 @@ use windows::get_mid_result;
 pub fn get(key: &str) -> Result<String, MIDError> {
     match get_mid_result() {
         Ok(mid) => {
-            let mid_bytes = mid.as_bytes();
+            let hmac_result = HMAC::mac(mid.as_bytes(), key.as_bytes());
+            let mid_hash = hex::encode(hmac_result);
 
-            let hmac_key = hmac::Key::new(hmac::HMAC_SHA256, key.as_bytes());
-            let signature = hmac::sign(&hmac_key, mid_bytes);
-            let signature_hex = hex::encode(signature.as_ref());
-
-            Ok(signature_hex)
+            Ok(mid_hash)
         }
         Err(err) => Err(err),
     }
@@ -62,15 +59,19 @@ pub fn get(key: &str) -> Result<String, MIDError> {
 /// `MID result` - array of OS parameters
 ///
 /// `MID hash` - SHA-256 hash from result
-pub fn print_mid(key: &str) {
+///
+/// # Examples
+///
+/// ```
+/// mid::print("mykey");
+/// ```
+pub fn print(key: &str) {
     match get_mid_result() {
         Ok(mid) => {
             let mid_result: Vec<String> = mid.split('|').map(|s| s.to_string()).collect();
-            let mid_bytes = mid.as_bytes();
 
-            let hmac_key = hmac::Key::new(hmac::HMAC_SHA256, key.as_bytes());
-            let signature = hmac::sign(&hmac_key, mid_bytes);
-            let mid_hash = hex::encode(signature.as_ref());
+            let hmac_result = HMAC::mac(mid.as_bytes(), key.as_bytes());
+            let mid_hash = hex::encode(hmac_result);
 
             println!("MID result: {:?}", mid_result);
             println!("MID hash: {}", mid_hash);
@@ -82,7 +83,7 @@ pub fn print_mid(key: &str) {
 #[test]
 fn mid_info() {
     match get("mykey") {
-        Ok(_) => print_mid("mykey"),
+        Ok(_) => print("mykey"),
         Err(err) => println!("MID error: {}", err.to_string()),
     }
 }

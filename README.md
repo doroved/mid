@@ -65,7 +65,7 @@ Add the dependency to Cargo.toml
 
 ```toml
 [dependencies]
-mid = "1.1.1"
+mid = "1.1.2"
 ```
 
 Or install using Cargo CLI
@@ -105,7 +105,7 @@ You can also display the MID result/hash in the console
 - `MID hash` - SHA-256 hash from result
 
 ```rust
-mid::print_mid("mykey");
+mid::print("mykey");
 ```
 
 ### Subscribe to my X

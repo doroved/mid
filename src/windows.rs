@@ -9,6 +9,8 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let csproduct_output = run_shell_comand(
         "powershell",
         [
+            "-WindowStyle",
+            "Hidden",
             "-command",
             r#"Get-WmiObject Win32_ComputerSystemProduct | Select-Object -ExpandProperty UUID"#,
         ],
@@ -18,6 +20,8 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let bios_output = run_shell_comand(
         "powershell",
         [
+            "-WindowStyle",
+            "Hidden",
             "-command",
             r#"Get-WmiObject Win32_BIOS | Select-Object -ExpandProperty SerialNumber"#,
         ],
@@ -27,6 +31,8 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let baseboard_output = run_shell_comand(
         "powershell",
         [
+            "-WindowStyle",
+            "Hidden",
             "-command",
             r#"Get-WmiObject Win32_BaseBoard | Select-Object -ExpandProperty SerialNumber"#,
         ],
@@ -36,6 +42,8 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let cpu_output = run_shell_comand(
         "powershell",
         [
+            "-WindowStyle",
+            "Hidden",
             "-command",
             r#"Get-WmiObject Win32_Processor | Select-Object -ExpandProperty ProcessorId"#,
         ],
