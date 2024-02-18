@@ -21,6 +21,13 @@ jobs:
         run: wmic csproduct get UUID
       - name: Get csproduct UUID from powershell
         run: powershell -WindowStyle Hidden -command "Get-WmiObject Win32_ComputerSystemProduct | Select-Object -ExpandProperty UUID"
+      - name: Get All FP from powershell
+        run: |
+          powershell -WindowStyle Hidden -command $csproduct = Get-WmiObject Win32_ComputerSystemProduct | Select-Object -ExpandProperty UUID;
+          $bios = Get-WmiObject Win32_BIOS | Select-Object -ExpandProperty SerialNumber;
+          $baseboard = Get-WmiObject Win32_BaseBoard | Select-Object -ExpandProperty SerialNumber;
+          $cpu = Get-WmiObject Win32_Processor | Select-Object -ExpandProperty ProcessorId;
+          "$csproduct|$bios|$baseboard|$cpu"
       - name: Get diskdrive serialnumber
         run: wmic diskdrive get serialnumber
       - name: Get bios serialnumber
