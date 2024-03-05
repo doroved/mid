@@ -46,10 +46,13 @@ fn parse_and_push(output_str: &str, targets: &[&str], result: &mut Vec<String>) 
 
             if line.contains(&target.to_lowercase()) {
                 let parts: Vec<&str> = line.split(":").collect();
-                let value = parts[1].trim().to_string();
 
-                if !value.is_empty() {
-                    result.push(value);
+                if parts.len() == 2 {
+                    let value = parts[1].trim().to_string();
+
+                    if !value.is_empty() {
+                        result.push(value);
+                    }
                 }
             }
         }
