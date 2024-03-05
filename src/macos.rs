@@ -10,7 +10,7 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
         "sh",
         [
             "-c",
-            r#"system_profiler SPHardwareDataType; system_profiler SPSecureElementDataType"#,
+            r#"system_profiler SPHardwareDataType SPSecureElementDataType"#,
         ],
     )?;
 
