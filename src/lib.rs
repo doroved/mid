@@ -81,7 +81,7 @@ pub fn print(key: &str) {
 }
 
 #[test]
-fn mid_info() {
+fn check_mid() {
     match get("mykey") {
         Ok(_) => print("mykey"),
         Err(err) => println!("MID error: {}", err.to_string()),

@@ -19,7 +19,7 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
             $cpu = Get-WmiObject Win32_Processor | Select-Object -ExpandProperty ProcessorId;
             "$csproduct|$bios|$baseboard|$cpu"
             "#,
-            ],
+        ],
     )
     .unwrap_or(String::new());
 
