@@ -79,7 +79,7 @@ cargo add mid
 As simple as it gets
 
 ```rust
-let machine_id = mid::get("mykey").unwrap();
+let machine_id = mid::get("mySecretKey").unwrap();
 ```
 
 Usage in a function with error handling
@@ -102,7 +102,7 @@ You can also display the MID result/hash in the console
 - `MID hash` - SHA-256 hash from result
 
 ```rust
-mid::print("mykey");
+mid::print("mySecretKey");
 ```
 
 ### Subscribe to my X

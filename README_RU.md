@@ -77,7 +77,7 @@ cargo add mid
 Максимально просто
 
 ```rust
-let machine_id = mid::get("mykey").unwrap();
+let machine_id = mid::get("mySecretKey").unwrap();
 ```
 
 Использование в функции с обработкой ошибки
@@ -100,7 +100,7 @@ fn get_machine_id() -> Result<String, String> {
 - `MID hash` - хеш SHA-256 от result
 
 ```rust
-mid::print("mykey");
+mid::print("mySecretKey");
 ```
 
 ### Подписывайтесь на мой Х

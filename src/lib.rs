@@ -1,7 +1,7 @@
 //! Creating a Machine ID for MacOS/Linux/Windows.
 //!
 //! ```
-//! let machine_id = mid::get("mykey").unwrap();
+//! let machine_id = mid::get("mySecretKey").unwrap();
 //! ```
 
 mod errors;
@@ -60,7 +60,7 @@ pub fn get(key: &str) -> Result<String, MIDError> {
 /// # Examples
 ///
 /// ```
-/// mid::print("mykey");
+/// mid::print("mySecretKey");
 /// ```
 pub fn print(key: &str) {
     match get_mid_result() {
