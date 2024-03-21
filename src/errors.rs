@@ -6,6 +6,7 @@ pub enum MIDError {
     ExecuteProcessError(std::io::Error),
     ParseError(std::string::FromUtf8Error),
     ResultMidError,
+    MissingMidKey,
 }
 
 impl Error for MIDError {}
@@ -21,6 +22,9 @@ impl fmt::Display for MIDError {
             }
             MIDError::ResultMidError => {
                 write!(f, "Empty result machine ID")
+            }
+            MIDError::MissingMidKey => {
+                write!(f, "The key is missing")
             }
         }
     }

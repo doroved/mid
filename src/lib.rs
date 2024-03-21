@@ -40,6 +40,10 @@ use windows::get_mid_result;
 /// }
 /// ```
 pub fn get(key: &str) -> Result<String, MIDError> {
+    if key.is_empty() {
+        return Err(MIDError::MissingMidKey);
+    }
+
     match get_mid_result() {
         Ok(mid) => {
             let hmac_result = HMAC::mac(mid.as_bytes(), key.as_bytes());
@@ -63,17 +67,21 @@ pub fn get(key: &str) -> Result<String, MIDError> {
 /// mid::print("mySecretKey");
 /// ```
 pub fn print(key: &str) {
-    match get_mid_result() {
-        Ok(mid) => {
-            let mid_result: Vec<String> = mid.split('|').map(|s| s.to_string()).collect();
+    if key.is_empty() {
+        println!("{}", MIDError::MissingMidKey)
+    } else {
+        match get_mid_result() {
+            Ok(mid) => {
+                let mid_result: Vec<String> = mid.split('|').map(|s| s.to_string()).collect();
 
-            let hmac_result = HMAC::mac(mid.as_bytes(), key.as_bytes());
-            let mid_hash = hex::encode(hmac_result);
+                let hmac_result = HMAC::mac(mid.as_bytes(), key.as_bytes());
+                let mid_hash = hex::encode(hmac_result);
 
-            println!("MID result: {:?}", mid_result);
-            println!("MID hash: {}", mid_hash);
+                println!("MID result: {:?}", mid_result);
+                println!("MID hash: {}", mid_hash);
+            }
+            Err(_) => {}
         }
-        Err(_) => {}
     }
 }
 

@@ -65,7 +65,7 @@ Add the dependency to Cargo.toml
 
 ```toml
 [dependencies]
-mid = "1.1.5"
+mid = "1.2.0"
 ```
 
 Or install using Cargo CLI
