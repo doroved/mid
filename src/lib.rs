@@ -30,8 +30,7 @@ use windows::get_mid_result;
 ///
 /// ```
 /// fn get_machine_id() -> Result<String, String> {
-///   // Generate a key on macOS/Linux with: openssl rand -hex 32
-///   let key = "293273abaf6fcb31d4a9b47b70a20b21133ff08852834c52c5f42ed8153b274a";
+///   let key = "mySecretKey";
 ///
 ///   match mid::get(key) {
 ///       Ok(mid) => Ok(mid),

@@ -84,8 +84,7 @@ let machine_id = mid::get("mykey").unwrap();
 
 ```rust
 fn get_machine_id() -> Result<String, String> {
-    // Сгенерируйте ключ на macOS/Linux с помощью: openssl rand -hex 32
-    let key = "293273abaf6fcb31d4a9b47b70a20b21133ff08852834c52c5f42ed8153b274a";
+    let key = "mySecretKey";
 
     match mid::get(key) {
         Ok(mid) => Ok(mid),
