@@ -86,9 +86,7 @@ Usage in a function with error handling
 
 ```rust
 fn get_machine_id() -> Result<String, String> {
-    let key = "mySecretKey";
-
-    match mid::get(key) {
+    match mid::get("mySecretKey") {
         Ok(mid) => Ok(mid),
         Err(err) => {
             println!("MID error: {}", err.to_string());

@@ -30,9 +30,7 @@ use windows::get_mid_result;
 ///
 /// ```
 /// fn get_machine_id() -> Result<String, String> {
-///   let key = "mySecretKey";
-///
-///   match mid::get(key) {
+///   match mid::get("mySecretKey") {
 ///       Ok(mid) => Ok(mid),
 ///       Err(err) => {
 ///           println!("MID error: {}", err.to_string());
