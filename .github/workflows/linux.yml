@@ -19,9 +19,11 @@ jobs:
         run: cargo test -- --nocapture
       - name: Get /etc/machine-id
         run: cat /etc/machine-id
+      - name: Get /var/lib/dbus/machine-id
+        run: cat /var/lib/dbus/machine-id
+      - name: hostnamectl status Machine ID
+        run: hostnamectl status | awk '/Machine ID:/ {print $3}'
       - name: Get sudo lshw
         run: sudo lshw
       - name: Get sudo dmidecode
         run: sudo dmidecode -t system
-      - name: hostnamectl status - Machine ID
-        run: hostnamectl status | awk '/Machine ID:/ {print $3}'
