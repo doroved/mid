@@ -24,7 +24,7 @@ jobs:
       - name: hostnamectl status Machine ID
         run: hostnamectl status | awk '/Machine ID:/ {print $3}'
       - name: Trio get machine-id with new line
-        run: hostnamectl1 status | awk '/Machine ID:/ {print $3}'; cat /var/lib/dbus/machine-id1 || true; cat /etc/machine-id1 || true;
+        run: hostnamectl status | awk '/Machine ID:/ {print $3}'; cat /var/lib/dbus/machine-id || true; cat /etc/machine-id || true;
       - name: Trio get machine-id with "|"
         run: |
           { hostnamectl status | awk '/Machine ID:/ {printf $3"|"}'; cat /var/lib/dbus/machine-id 2>/dev/null; cat /etc/machine-id 2>/dev/null; } | paste -sd '|' | tr '|' '\n' | sort | uniq | tr '\n' '|'
