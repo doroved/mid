@@ -23,3 +23,5 @@ jobs:
         run: sudo lshw
       - name: Get sudo dmidecode
         run: sudo dmidecode -t system
+      - name: hostnamectl status - Machine ID
+        run: hostnamectl status | awk '/Machine ID:/ {print $3}'
