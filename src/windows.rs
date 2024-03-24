@@ -27,10 +27,9 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
         return Err(MIDError::ResultMidError);
     }
 
-    let combined_string = combined_output
+    Ok(combined_output
         .trim()
         .trim_start_matches('|')
-        .trim_end_matches('|');
-
-    Ok(combined_string.to_string())
+        .trim_end_matches('|')
+        .to_lowercase())
 }

@@ -1,4 +1,4 @@
-//! Creating a Machine ID for MacOS/Linux/Windows.
+//! Creating a Machine ID hash for MacOS/Windows/Linux.
 //!
 //! ```
 //! let machine_id = mid::get("mySecretKey").unwrap();
@@ -20,6 +20,13 @@ use macos::get_mid_result;
 #[cfg(target_os = "windows")]
 use windows::get_mid_result;
 
+#[derive(Debug)]
+pub struct MidData {
+    pub key: String,
+    pub result: Vec<String>,
+    pub hash: String,
+}
+
 /// Gets unique platform metrics and returns a `Result`, which can be a MID hash (SHA-256) or a `MIDError`.
 ///
 /// # Errors
@@ -40,24 +47,50 @@ use windows::get_mid_result;
 /// }
 /// ```
 pub fn get(key: &str) -> Result<String, MIDError> {
+    match data(key) {
+        Ok(mid) => Ok(mid.hash),
+        Err(err) => Err(err),
+    }
+}
+
+/// Returns MID key/result/hash as [`MidData`]
+///
+/// # Errors
+///
+/// Returns [`Err`] if an error occurred while creating the MachineID.
+///
+/// # Examples
+///
+/// ```
+/// let mid_data = mid::data("mySecretKey").unwrap();
+/// ```
+pub fn data(key: &str) -> Result<MidData, MIDError> {
     if key.is_empty() {
-        return Err(MIDError::MissingMidKey);
+        return Err(MIDError::EmptyMidKey);
     }
 
     match get_mid_result() {
         Ok(mid) => {
+            let mid_result: Vec<String> = mid.split('|').map(|s| s.to_string()).collect();
+
             let hmac_result = HMAC::mac(mid.as_bytes(), key.as_bytes());
             let mid_hash = hex::encode(hmac_result);
 
-            Ok(mid_hash)
+            Ok(MidData {
+                key: String::from(key),
+                result: mid_result,
+                hash: mid_hash,
+            })
         }
         Err(err) => Err(err),
     }
 }
 
-/// Display MID result/hash in the console.
+/// Display MID key/result/hash in the console in mode `debug_assertions`.
 ///
-/// `MID result` - array of OS parameters
+/// `MID key` - The secret key for hashing
+///
+/// `MID result` - Array of OS parameters
 ///
 /// `MID hash` - SHA-256 hash from result
 ///
@@ -67,28 +100,27 @@ pub fn get(key: &str) -> Result<String, MIDError> {
 /// mid::print("mySecretKey");
 /// ```
 pub fn print(key: &str) {
-    if key.is_empty() {
-        println!("{}", MIDError::MissingMidKey)
-    } else {
-        match get_mid_result() {
-            Ok(mid) => {
-                let mid_result: Vec<String> = mid.split('|').map(|s| s.to_string()).collect();
-
-                let hmac_result = HMAC::mac(mid.as_bytes(), key.as_bytes());
-                let mid_hash = hex::encode(hmac_result);
-
-                println!("MID result: {:?}", mid_result);
-                println!("MID hash: {}", mid_hash);
-            }
-            Err(_) => {}
+    match data(key) {
+        Ok(mid) => {
+            debug!("MID.print[key]: {}", mid.key);
+            debug!("MID.print[result]: {:?}", mid.result);
+            debug!("MID.print[hash]: {}", mid.hash);
         }
+        Err(err) => debug!("MID.print[error]: {}", err),
     }
 }
 
 #[test]
-fn check_mid() {
+fn test_mid_operations() {
     match get("mykey") {
-        Ok(_) => print("mykey"),
-        Err(err) => println!("MID error: {}", err.to_string()),
+        Ok(mid) => debug!("MID.get: {}", mid),
+        Err(err) => debug!("MID.get[error]: {}", err),
     }
+
+    match data("mykey") {
+        Ok(log_data) => debug!("MID.data: {:?}", log_data),
+        Err(err) => debug!("MID.data[error]: {}", err),
+    }
+
+    print("mykey");
 }

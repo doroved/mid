@@ -23,27 +23,21 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
         "SEID",
     ];
 
-    let mut result = Vec::new();
+    let combined_string = process_output(&system_profiler_output, &targets);
 
-    parse_and_push(&system_profiler_output, &targets, &mut result);
-
-    if result.is_empty() {
+    if combined_string.is_empty() {
         return Err(MIDError::ResultMidError);
     }
-
-    let combined_string = result.join("|");
 
     Ok(combined_string)
 }
 
 #[cfg(target_os = "macos")]
-fn parse_and_push(output_str: &str, targets: &[&str], result: &mut Vec<String>) {
-    let lines: Vec<&str> = output_str.lines().collect();
+fn process_output(output_str: &str, targets: &[&str]) -> String {
+    let mut result = Vec::new();
 
     for target in targets {
-        for line in &lines {
-            let line = line.to_lowercase();
-
+        for line in output_str.to_lowercase().lines() {
             if line.contains(&target.to_lowercase()) {
                 let parts: Vec<&str> = line.split(":").collect();
 
@@ -57,4 +51,6 @@ fn parse_and_push(output_str: &str, targets: &[&str], result: &mut Vec<String>) 
             }
         }
     }
+
+    result.join("|")
 }
