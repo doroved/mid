@@ -86,7 +86,7 @@ pub fn data(key: &str) -> Result<MidData, MIDError> {
     }
 }
 
-/// Display MID key/result/hash in the console in mode `debug_assertions`.
+/// Output the MID key/result/hash to the console in `debug_assertions` mode.
 ///
 /// `MID key` - The secret key for hashing
 ///
