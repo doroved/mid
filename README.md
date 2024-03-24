@@ -50,12 +50,6 @@ The command returns information about the Secure Element. This element is used t
 - **Platform ID**: The unique identifier of the platform to which the Secure Element belongs.
 - **SEID**: The unique identifier of the Secure Element. Created during the NFC chip firmware at the manufacturer's factory.
 
-## Linux
-
-- `machine-id`: A machine identifier (ID) that is used to uniquely identify a computer on Linux systems.
-
-> **Unfortunately, this parameter is subject to change, and a reliable solution for Linux has not been found yet.**
-
 ## Windows
 
 [PowerShell](https://en.wikipedia.org/wiki/PowerShell) - expandable automation tool. Parameters used:
@@ -67,6 +61,12 @@ The command returns information about the Secure Element. This element is used t
 - `powershell -command "Get-WmiObject Win32_BaseBoard"`: Returns the serial number of the computer's baseboard. It usually remains constant and does not change.
 
 - `powershell -command "Get-WmiObject Win32_Processor"`: Returns the computer's processor identifier. It should remain unchanged, except in cases of processor replacement.
+
+## Linux
+
+- `machine-id`: A machine identifier (ID) that is used to uniquely identify a computer on Linux systems.
+
+> **Unfortunately, this parameter is subject to change, and a reliable solution for Linux has not been found yet.**
 
 ## Installation
 
