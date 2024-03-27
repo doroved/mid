@@ -66,7 +66,7 @@ The command returns information about the Secure Element. This element is used t
 
 - `machine-id`: A machine identifier (ID) that is used to uniquely identify a computer on Linux systems.
 
-> **Unfortunately, this parameter is subject to change, and a reliable solution for Linux has not been found yet.**
+> **Unfortunately this parameter is subject to user modification and no reliable solution for Linux has been found yet.**
 
 ## Installation
 
