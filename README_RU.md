@@ -91,7 +91,6 @@ let machine_id = mid::get("mySecretKey").unwrap();
 
 ```
 Пример: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
-
 ```
 
 Получить данные MID key/result/hash
