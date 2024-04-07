@@ -89,24 +89,33 @@ Get machine ID hash
 
 ```rust
 let machine_id = mid::get("mySecretKey").unwrap();
-// Example: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
+```
+
+```
+Example: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
 ```
 
 Get MID key/result/hash data
 
 ```rust
 let mid_data = mid::data("mySecretKey").unwrap();
-// MacOS example: MidData { key: "mySecretKey", result: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "PlatformID", "SEID"], hash: "3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977" }
+```
+
+```
+MacOS example: MidData { key: "mySecretKey", result: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "PlatformID", "SEID"], hash: "3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977" }
 ```
 
 Output the MID key/result/hash to the console in `debug_assertions` mode
 
 ```rust
 mid::print("mySecretKey");
-// MacOS example:
-// MID.print[key]: mySecretKey
-// MID.print[result]: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "PlatformID", "SEID"]
-// MID.print[hash]: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
+```
+
+```
+MacOS example:
+MID.print[key]: mySecretKey
+MID.print[result]: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "PlatformID", "SEID"]
+MID.print[hash]: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
 ```
 
 - `MID key` - The secret key for hashing

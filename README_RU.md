@@ -87,24 +87,34 @@ cargo add mid
 
 ```rust
 let machine_id = mid::get("mySecretKey").unwrap();
-// Пример: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
+```
+
+```
+Пример: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
+
 ```
 
 Получить данные MID key/result/hash
 
 ```rust
 let mid_data = mid::data("mySecretKey").unwrap();
-// MacOS пример: MidData { key: "mySecretKey", result: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "PlatformID", "SEID"], hash: "3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977" }
+```
+
+```
+MacOS пример: MidData { key: "mySecretKey", result: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "PlatformID", "SEID"], hash: "3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977" }
 ```
 
 Вывести в консоль MID key/result/hash в режиме `debug_assertions`
 
 ```rust
 mid::print("mySecretKey");
-// MacOS пример:
-// MID.print[key]: mySecretKey
-// MID.print[result]: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "PlatformID", "SEID"]
-// MID.print[hash]: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
+```
+
+```
+MacOS пример:
+MID.print[key]: mySecretKey
+MID.print[result]: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "PlatformID", "SEID"]
+MID.print[hash]: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
 ```
 
 - `MID key` - Секретный ключ для хэширования
