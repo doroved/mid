@@ -1,6 +1,6 @@
 [![Crates.io Version](https://img.shields.io/crates/v/mid)](https://crates.io/crates/mid)
-[![Crates.io Total Downloads](https://img.shields.io/crates/d/mid)](https://crates.io/crates/mid)
-[![docs.rs](https://img.shields.io/docsrs/mid)](https://docs.rs/mid)
+[![Crates.io Total Downloads](https://img.shields.io/crates/d/mid?style=flat&color=white)](https://crates.io/crates/mid)
+[![docs.rs](https://img.shields.io/docsrs/mid?style=flat&color=orange)](https://docs.rs/mid)
 
 # mid
 
