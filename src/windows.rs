@@ -58,7 +58,7 @@ pub fn get_mid_result() -> Result<String, MIDError> {
     result.push(processor_id_base[0].ProcessorId.to_string());
 
     if result.is_empty() {
-        return Err(MIDError::ResultMidError);
+        return Err(MIDError::EmptyResultMachineId);
     }
 
     let combined_string = result.join("|");
