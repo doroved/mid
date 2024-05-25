@@ -5,7 +5,7 @@ use wmi::{COMLibrary, WMIConnection};
 use serde::Deserialize;
 
 #[cfg(target_os = "windows")]
-use crate::{MIDError, Result};
+use crate::errors::MIDError;
 
 #[cfg(target_os = "windows")]
 #[derive(Deserialize)]
@@ -29,7 +29,7 @@ struct ProcessorIdGeneric {
 }
 
 #[cfg(target_os = "windows")]
-pub fn get_mid_result() -> Result<String> {
+pub fn get_mid_result() -> Result<String, MIDError> {
     let com_connection = unsafe { COMLibrary::assume_initialized() };
     let wmi_connection =
         WMIConnection::new(com_connection.into()).expect("Failed to connect to WMI");
@@ -58,7 +58,7 @@ pub fn get_mid_result() -> Result<String> {
     result.push(processor_id_base[0].ProcessorId.to_string());
 
     if result.is_empty() {
-        return Err(MIDError::EmptyMidResult);
+        return Err(MIDError::ResultMidError);
     }
 
     let combined_string = result.join("|");
