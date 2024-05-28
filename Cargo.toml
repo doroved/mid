@@ -19,6 +19,6 @@ hmac-sha256 = "1.1.7"
 
 [target.'cfg(windows)'.dependencies]
 wmi = "0.13.3"
-serde = "1.0.202"
+serde = { version = "1.0.203", features = ["derive"] }
 
 # [target.'cfg(target_os = "macos")'.dependencies]
