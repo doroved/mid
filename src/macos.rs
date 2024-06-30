@@ -64,14 +64,14 @@ impl AdditionalData {
         let sysctl_data = Self::sysctl_data().unwrap();
         let sysctl_lines: Vec<&str> = sysctl_data.trim().split('\n').collect();
 
-        let username = sysctl_lines.get(5).unwrap().to_string();
-        let hostname = sysctl_lines.get(2).unwrap().to_string();
+        let username = sysctl_lines.get(0).unwrap().to_string();
+        let hostname = sysctl_lines.get(1).unwrap().to_string();
         let os_name = Self::os_name().unwrap();
-        let os_version = sysctl_lines.get(3).unwrap().to_string();
+        let os_version = sysctl_lines.get(2).unwrap().to_string();
         let os_full = format!("{} {}", os_name, os_version);
-        let chip = sysctl_lines.get(4).unwrap().to_string();
-        let memsize = Self::bytes_to_gigabytes(sysctl_lines.get(1).unwrap().parse().unwrap());
-        let cpu_core_count = sysctl_lines.get(0).unwrap().parse().unwrap();
+        let chip = sysctl_lines.get(3).unwrap().to_string();
+        let memsize = Self::bytes_to_gigabytes(sysctl_lines.get(4).unwrap().parse().unwrap());
+        let cpu_core_count = sysctl_lines.get(5).unwrap().parse().unwrap();
         let languages = Self::languages().unwrap();
 
         Self {
@@ -92,7 +92,7 @@ impl AdditionalData {
             "sh",
             [
                 "-c",
-                r#"sysctl -n hw.ncpu hw.memsize kern.hostname kern.osproductversion machdep.cpu.brand_string && whoami"#,
+                r#"whoami && sysctl -n kern.hostname kern.osproductversion machdep.cpu.brand_string hw.memsize hw.ncpu"#,
             ],
         )?;
 
