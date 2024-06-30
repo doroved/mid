@@ -16,6 +16,8 @@ use hmac_sha256::HMAC;
 #[cfg(target_os = "linux")]
 use linux::get_mid_result;
 #[cfg(target_os = "macos")]
+use macos::get_additional_data;
+#[cfg(target_os = "macos")]
 use macos::get_mid_result;
 #[cfg(target_os = "windows")]
 use windows::get_mid_result;
@@ -27,13 +29,27 @@ pub struct MidData {
     pub hash: String,
 }
 
+#[derive(Debug)]
+#[cfg(target_os = "macos")]
+pub struct AdditionalData {
+    pub username: String,
+    pub hostname: String,
+    pub os_name: String,
+    pub os_version: String,
+    pub os_full: String,
+    pub chip: String,
+    pub memsize: u8,
+    pub cpu_core_count: u8,
+    pub languages: Vec<String>,
+}
+
 /// Gets unique platform metrics and returns a `Result`, which can be a MID hash (SHA-256) or a `MIDError`.
 ///
 /// # Errors
 ///
 /// Returns [`Err`] if an error occurred while creating the MachineID.
 ///
-/// # Examples
+/// # Example
 ///
 /// ```
 /// fn get_machine_id() -> Result<String, String> {
@@ -59,7 +75,7 @@ pub fn get(key: &str) -> Result<String, MIDError> {
 ///
 /// Returns [`Err`] if an error occurred while creating the MachineID.
 ///
-/// # Examples
+/// # Example
 ///
 /// ```
 /// let mid_data = mid::data("mySecretKey").unwrap();
@@ -86,6 +102,34 @@ pub fn data(key: &str) -> Result<MidData, MIDError> {
     }
 }
 
+/// Returns additional device data that is not involved in generating the device hash as [`AdditionalData`]
+///
+/// # Errors
+///
+/// Returns [`Err`] if an error occurred while retrieving additional data.
+///
+/// # Example
+///
+/// ```
+/// let additional_data = mid::additional_data().unwrap();
+/// println!("Username: {}", additional_data.username);
+/// println!("Hostname: {}", additional_data.hostname);
+/// println!("OS Name: {}", additional_data.os_name);
+/// println!("OS Version: {}", additional_data.os_version);
+/// println!("OS Full: {}", additional_data.os_full);
+/// println!("Chip: {}", additional_data.chip);
+/// println!("Memory Size: {}", additional_data.memsize);
+/// println!("CPU Core Count: {}", additional_data.cpu_core_count);
+/// println!("Languages: {:?}", additional_data.languages);
+/// ```
+#[cfg(target_os = "macos")]
+pub fn additional_data() -> Result<AdditionalData, MIDError> {
+    match get_additional_data() {
+        Ok(additional_data) => Ok(additional_data),
+        Err(err) => Err(err),
+    }
+}
+
 /// Output the MID key/result/hash to the console in `debug_assertions` mode.
 ///
 /// `MID key` - The secret key for hashing
@@ -94,7 +138,7 @@ pub fn data(key: &str) -> Result<MidData, MIDError> {
 ///
 /// `MID hash` - SHA-256 hash from result
 ///
-/// # Examples
+/// # Example
 ///
 /// ```
 /// mid::print("mySecretKey");
@@ -120,6 +164,11 @@ fn test_mid_operations() {
     match data("mykey") {
         Ok(log_data) => debug!("MID.data: {:?}", log_data),
         Err(err) => debug!("MID.data[error]: {}", err),
+    }
+
+    match additional_data() {
+        Ok(log_data) => debug!("MID.additional_data: {:?}", log_data),
+        Err(err) => debug!("MID.additional_data[error]: {}", err),
     }
 
     print("mykey");

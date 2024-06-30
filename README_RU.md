@@ -10,6 +10,10 @@
 
 ## История изменений
 
+**v2.1.0** - 30 июня, 2024
+
+- Добавлена функция `mid::additional_data`, которая возвращает дополнительные данные об устройстве, которые не участвуют в формировании хеша устройства. На текущий момент доступно только для MacOS.
+
 **v2.0.0** - 24 марта, 2024
 
 - Вернул `to_lowercase()` для Windows MID result, который по ошибке был убран в v1.1.3. **Это изменит текущие хеши Windows устройств!** При необходимости, используйте версию 2.0.0 только для новых проектов или попросите пользователей перепривязать лицензию на новые хеши в текущем проекте.
@@ -72,7 +76,7 @@ system_profiler SPSecureElementDataType
 
 ```toml
 [dependencies]
-mid = "2.0.0"
+mid = "2.1.0"
 ```
 
 Или установить с помощью Cargo CLI
@@ -83,7 +87,7 @@ cargo add mid
 
 ## Как использовать
 
-Получить хеш устройства
+### Получить хеш устройства
 
 ```rust
 let machine_id = mid::get("mySecretKey").unwrap();
@@ -93,7 +97,7 @@ let machine_id = mid::get("mySecretKey").unwrap();
 Пример: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
 ```
 
-Получить данные MID key/result/hash
+### Получить данные MID key/result/hash
 
 ```rust
 let mid_data = mid::data("mySecretKey").unwrap();
@@ -103,7 +107,7 @@ let mid_data = mid::data("mySecretKey").unwrap();
 MacOS пример: MidData { key: "mySecretKey", result: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "PlatformID", "SEID"], hash: "3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977" }
 ```
 
-Вывести в консоль MID key/result/hash в режиме `debug_assertions`
+### Вывести в консоль MID key/result/hash в режиме `debug_assertions`
 
 ```rust
 mid::print("mySecretKey");
@@ -119,6 +123,19 @@ MID.print[hash]: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd54197
 - `MID key` - Секретный ключ для хэширования
 - `MID result` - Массив параметров OS
 - `MID hash` - Хеш SHA-256 от result
+
+### Получить дополнительные данные об устройстве
+
+Эти данные не участвуют в формировании хеша устройства. На текущий момент доступно только для `MacOS`.
+
+```rust
+let additional_data = mid::additional_data().unwrap();
+println!("{:?}", additional_data);
+```
+
+```
+AdditionalData { username: "doroved", hostname: "MacBook-Pro--doroved.local", os_name: "Sonoma", os_version: "14.5", os_full: "Sonoma 14.5", chip: "Apple M1 Pro", memsize: 16, cpu_core_count: 8, languages: ["ru-RU", "bg-RU", "en-RU"] }
+```
 
 ## Подписывайтесь на мой Х
 

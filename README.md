@@ -12,6 +12,10 @@ Utilizes the most static system parameters possible to generate reliable device 
 
 ## Change Log
 
+**v2.1.0** - June 30, 2024
+
+- Added `mid::additional_data` function that returns additional device data that is not involved in forming the device hash. Currently available for MacOS only.
+
 **v2.0.0** - March 24, 2024
 
 - Returned `to_lowercase()` for Windows MID result, which was mistakenly removed in v1.1.3. **This will change the current Windows device hashes!** If necessary, use version 2.0.0 for new projects only, or ask users to re-bind the license for new hashes in the current project.
@@ -74,7 +78,7 @@ Add the dependency to Cargo.toml
 
 ```toml
 [dependencies]
-mid = "2.0.0"
+mid = "2.1.0"
 ```
 
 Or install using Cargo CLI
@@ -85,7 +89,7 @@ cargo add mid
 
 ## How to Use
 
-Get machine ID hash
+### Get machine ID hash
 
 ```rust
 let machine_id = mid::get("mySecretKey").unwrap();
@@ -95,7 +99,7 @@ let machine_id = mid::get("mySecretKey").unwrap();
 Example: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
 ```
 
-Get MID key/result/hash data
+### Get MID key/result/hash data
 
 ```rust
 let mid_data = mid::data("mySecretKey").unwrap();
@@ -105,7 +109,7 @@ let mid_data = mid::data("mySecretKey").unwrap();
 MacOS example: MidData { key: "mySecretKey", result: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "PlatformID", "SEID"], hash: "3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977" }
 ```
 
-Output the MID key/result/hash to the console in `debug_assertions` mode
+### Output the MID key/result/hash to the console in `debug_assertions` mode
 
 ```rust
 mid::print("mySecretKey");
@@ -121,6 +125,19 @@ MID.print[hash]: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd54197
 - `MID key` - The secret key for hashing
 - `MID result` - Array of OS parameters
 - `MID hash` - SHA-256 hash from result
+
+### Get additional device data
+
+This data does not contribute to the device hash. Currently available for `MacOS` only.
+
+```rust
+let additional_data = mid::additional_data().unwrap();
+println!("{:?}", additional_data);
+```
+
+```
+AdditionalData { username: "doroved", hostname: "MacBook-Pro--doroved.local", os_name: "Sonoma", os_version: "14.5", os_full: "Sonoma 14.5", chip: "Apple M1 Pro", memsize: 16, cpu_core_count: 8, languages: ["ru-RU", "bg-RU", "en-RU"] }
+```
 
 ## Subscribe to my X
 
