@@ -2,6 +2,8 @@
 [![Crates.io Total Downloads](https://img.shields.io/crates/d/mid?style=flat&color=white)](https://crates.io/crates/mid)
 [![docs.rs](https://img.shields.io/docsrs/mid?style=flat&color=orange)](https://docs.rs/mid)
 
+**Сделано с ❤️ для [Tauri](https://tauri.app)**
+
 # mid
 
 Создание хэша идентификатора устройства для MacOS/Windows/Linux.

@@ -2,6 +2,8 @@
 [![Crates.io Total Downloads](https://img.shields.io/crates/d/mid?style=flat&color=white)](https://crates.io/crates/mid)
 [![docs.rs](https://img.shields.io/docsrs/mid?style=flat&color=orange)](https://docs.rs/mid)
 
+**Made with ❤️ for [Tauri](https://tauri.app)**
+
 [README RU](./README_RU.md)
 
 # mid
