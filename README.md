@@ -57,7 +57,7 @@ system_profiler SPSecureElementDataType
 
 The command returns information about the Secure Element. This element is used to store encrypted data, such as information about payment cards and other confidential data. Parameters used:
 
-- **Platform ID**: The unique identifier of the platform to which the Secure Element belongs.
+- ~~**Platform ID**: The unique identifier of the platform to which the Secure Element belongs.~~
 - **SEID**: The unique identifier of the Secure Element. Created during the NFC chip firmware at the manufacturer's factory.
 
 ## Windows
