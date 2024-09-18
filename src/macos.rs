@@ -22,7 +22,8 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
         "Serial Number",
         "Hardware UUID",
         "Provisioning UDID",
-        "Platform ID",
+        // After upgrading to macos 15 Sequoia, this changed. For example, was n5b2m00417820000, became n5b2m004c7ed0000
+        // "Platform ID",
         "SEID",
     ];
 

@@ -14,6 +14,10 @@ Utilizes the most static system parameters possible to generate reliable device 
 
 ## Change Log
 
+**v3.0.0** - September 18, 2024
+
+- **Important!** `Platform ID` has been removed from the mac device hash dataset because after upgrading from macos 14.x to 15.0, it changed, causing the device hash to change. Use this version only for new projects or update the device hashes of your current users.
+
 **v2.1.0** - June 30, 2024
 
 - Added `mid::additional_data` function that returns additional device data that is not involved in forming the device hash. Currently available for MacOS only.
@@ -80,7 +84,7 @@ Add the dependency to Cargo.toml
 
 ```toml
 [dependencies]
-mid = "2.1.0"
+mid = "3.0.0"
 ```
 
 Or install using Cargo CLI
