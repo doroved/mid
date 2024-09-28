@@ -15,7 +15,15 @@ where
     I: IntoIterator<Item = S>,
     S: AsRef<OsStr>,
 {
-    Command::new(shell)
+    let mut command = Command::new(shell);
+
+    #[cfg(target_os = "windows")]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x08000000;
+        command.creation_flags(CREATE_NO_WINDOW);
+    }
+    command
         .args(args)
         .output()
         .map_err(MIDError::ExecuteProcessError)
