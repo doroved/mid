@@ -166,6 +166,7 @@ fn test_mid_operations() {
         Err(err) => debug!("MID.data[error]: {}", err),
     }
 
+    #[cfg(target_os = "macos")]
     match additional_data() {
         Ok(log_data) => debug!("MID.additional_data: {:?}", log_data),
         Err(err) => debug!("MID.additional_data[error]: {}", err),
