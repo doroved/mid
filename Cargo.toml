@@ -1,6 +1,6 @@
 [package]
 name = "mid"
-version = "3.0.0"
+version = "3.0.1"
 edition = "2021"
 authors = ["doroved"]
 description = "Creating a Machine ID hash for MacOS/Windows/Linux"
@@ -15,4 +15,4 @@ doctest = false
 
 [dependencies]
 hex = "0.4.3"
-hmac-sha256 = "1.1.7"
+hmac-sha256 = "1.1.8"

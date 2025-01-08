@@ -60,12 +60,19 @@ fn process_output(output_str: &str, targets: &[&str]) -> String {
 }
 
 #[cfg(target_os = "macos")]
+impl Default for AdditionalData {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+#[cfg(target_os = "macos")]
 impl AdditionalData {
     pub fn new() -> Self {
         let sysctl_data = Self::sysctl_data().unwrap();
         let sysctl_lines: Vec<&str> = sysctl_data.trim().split('\n').collect();
 
-        let username = sysctl_lines.get(0).unwrap().to_string();
+        let username = sysctl_lines.first().unwrap().to_string();
         let hostname = sysctl_lines.get(1).unwrap().to_string();
         let os_name = Self::os_name().unwrap();
         let os_version = sysctl_lines.get(2).unwrap().to_string();

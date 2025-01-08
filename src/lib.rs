@@ -124,10 +124,7 @@ pub fn data(key: &str) -> Result<MidData, MIDError> {
 /// ```
 #[cfg(target_os = "macos")]
 pub fn additional_data() -> Result<AdditionalData, MIDError> {
-    match get_additional_data() {
-        Ok(additional_data) => Ok(additional_data),
-        Err(err) => Err(err),
-    }
+    get_additional_data()
 }
 
 /// Output the MID key/result/hash to the console in `debug_assertions` mode.
