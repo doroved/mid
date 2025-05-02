@@ -12,6 +12,8 @@ mod windows;
 
 use errors::MIDError;
 use hmac_sha256::HMAC;
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
 
 #[cfg(target_os = "linux")]
 use linux::get_mid_result;
@@ -22,14 +24,16 @@ use macos::get_mid_result;
 #[cfg(target_os = "windows")]
 use windows::get_mid_result;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct MidData {
     pub key: String,
     pub result: Vec<String>,
     pub hash: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[cfg(target_os = "macos")]
 pub struct AdditionalData {
     pub username: String,
