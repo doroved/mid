@@ -24,7 +24,8 @@ Utilizes the most static system parameters possible to generate reliable device 
 
 **v3.0.0** - September 18, 2024
 
-> [!IMPORTANT] > `Platform ID` has been removed from the mac device hash dataset because after upgrading from macos 14.x to 15.0, it [changed](https://github.com/doroved/mid/blob/d2587cc51f5bf406df7f84ba420e84942b022e23/src/macos.rs#L25), causing the device hash to change. Use this version only for new projects or update the device hashes of your current users.
+> [!IMPORTANT]
+> `Platform ID` has been removed from the mac device hash dataset because after upgrading from macos 14.x to 15.0, it [changed](https://github.com/doroved/mid/blob/d2587cc51f5bf406df7f84ba420e84942b022e23/src/macos.rs#L25), causing the device hash to change. Use this version only for new projects or update the device hashes of your current users.
 
 **v2.1.0** - June 30, 2024
 
