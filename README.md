@@ -14,6 +14,9 @@ Utilizes the most static system parameters possible to generate reliable device 
 
 ## Change Log
 
+**v3.0.3** - July 17, 2025
+- Added `model_name` to `mid::additional_data`
+
 **v3.0.2** - May 3, 2025
 
 > [!NOTE]
@@ -151,7 +154,7 @@ println!("{:?}", additional_data);
 ```
 
 ```
-AdditionalData { username: "doroved", hostname: "MacBook-Pro--doroved.local", os_name: "Sonoma", os_version: "14.5", os_full: "Sonoma 14.5", chip: "Apple M1 Pro", memsize: 16, cpu_core_count: 8, languages: ["ru-RU", "bg-RU", "en-RU"] }
+AdditionalData { username: "doroved", hostname: "MacBook-Pro--doroved.local", model_name: "MacBook Pro", os_name: "Sonoma", os_version: "14.5", os_full: "Sonoma 14.5", chip: "Apple M1 Pro", memsize: 16, cpu_core_count: 8, languages: ["ru-RU", "bg-RU", "en-RU"] }
 ```
 
 ## Subscribe to my X

@@ -74,9 +74,10 @@ impl AdditionalData {
 
         let username = sysctl_lines.first().unwrap().to_string();
         let hostname = sysctl_lines.get(1).unwrap().to_string();
+        let model_name = Self::model_name().unwrap();
         let os_name = Self::os_name().unwrap();
         let os_version = sysctl_lines.get(2).unwrap().to_string();
-        let os_full = format!("{} {}", os_name, os_version);
+        let os_full = format!("{os_name} {os_version}");
         let chip = sysctl_lines.get(3).unwrap().to_string();
         let memsize = Self::bytes_to_gigabytes(sysctl_lines.get(4).unwrap().parse().unwrap());
         let cpu_core_count = sysctl_lines.get(5).unwrap().parse().unwrap();
@@ -85,6 +86,7 @@ impl AdditionalData {
         Self {
             username,
             hostname,
+            model_name,
             os_name,
             os_version,
             os_full,
@@ -142,6 +144,22 @@ impl AdditionalData {
         languages.retain(|s| !s.is_empty());
 
         languages
+    }
+
+    fn model_name() -> Result<String, MIDError> {
+        let system_profiler_output = run_shell_comand(
+            "sh",
+            [
+                "-c",
+                r#"system_profiler SPHardwareDataType | grep "Model Name""#,
+            ],
+        )?;
+
+        let model_name = system_profiler_output.split(":").collect::<Vec<&str>>()[1]
+            .trim()
+            .to_string();
+
+        Ok(model_name)
     }
 }
 

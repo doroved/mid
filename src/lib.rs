@@ -38,6 +38,7 @@ pub struct MidData {
 pub struct AdditionalData {
     pub username: String,
     pub hostname: String,
+    pub model_name: String,
     pub os_name: String,
     pub os_version: String,
     pub os_full: String,
