@@ -5,7 +5,7 @@ use std::collections::HashSet;
 use crate::errors::MIDError;
 
 #[cfg(target_os = "linux")]
-use crate::utils::run_shell_comand;
+use crate::utils::run_shell_command;
 
 #[cfg(target_os = "linux")]
 pub(crate) fn get_mid_result() -> Result<String, MIDError> {

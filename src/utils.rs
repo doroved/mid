@@ -10,7 +10,7 @@ macro_rules! debug {
     };
 }
 
-pub(crate) fn run_shell_comand<S, I>(shell: S, args: I) -> Result<String, MIDError>
+pub(crate) fn run_shell_command<S, I>(shell: S, args: I) -> Result<String, MIDError>
 where
     I: IntoIterator<Item = S>,
     S: AsRef<OsStr>,

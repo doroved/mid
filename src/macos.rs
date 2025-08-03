@@ -2,14 +2,14 @@
 use crate::errors::MIDError;
 
 #[cfg(target_os = "macos")]
-use crate::utils::run_shell_comand;
+use crate::utils::run_shell_command;
 
 #[cfg(target_os = "macos")]
 use crate::AdditionalData;
 
 #[cfg(target_os = "macos")]
 pub(crate) fn get_mid_result() -> Result<String, MIDError> {
-    let system_profiler_output = run_shell_comand(
+    let system_profiler_output = run_shell_command(
         "sh",
         [
             "-c",
@@ -98,7 +98,7 @@ impl AdditionalData {
     }
 
     fn sysctl_data() -> Result<String, MIDError> {
-        let sysctl_output = run_shell_comand(
+        let sysctl_output = run_shell_command(
             "sh",
             [
                 "-c",
@@ -110,26 +110,58 @@ impl AdditionalData {
     }
 
     fn languages() -> Result<Vec<String>, MIDError> {
-        let defaults_output = run_shell_comand("sh", ["-c", r#"defaults read -g AppleLanguages"#])?;
+        let defaults_output =
+            run_shell_command("sh", ["-c", r#"defaults read -g AppleLanguages"#])?;
 
         let languages = Self::extract_languages(defaults_output.as_str());
         Ok(languages)
     }
 
-    fn os_name() -> Result<String, MIDError> {
-        let os_output = run_shell_comand(
-            "sh",
-            [
-                "-c",
-                r#"awk '/SOFTWARE LICENSE AGREEMENT FOR macOS/' '/System/Library/CoreServices/Setup Assistant.app/Contents/Resources/en.lproj/OSXSoftwareLicense.rtf' | awk -F 'macOS ' '{print $NF}' | awk '{print substr($0, 0, length($0)-1)}'"#,
-            ],
-        )?;
+    // fn os_name() -> Result<String, MIDError> {
+    //     let os_output = run_shell_command(
+    //         "sh",
+    //         [
+    //             "-c",
+    //             r#"awk '/SOFTWARE LICENSE AGREEMENT FOR macOS/' '/System/Library/CoreServices/Setup Assistant.app/Contents/Resources/en.lproj/OSXSoftwareLicense.rtf' | awk -F 'macOS ' '{print $NF}' | awk '{print substr($0, 0, length($0)-1)}'"#,
+    //         ],
+    //     )?;
 
-        if os_output.is_empty() {
+    //     if os_output.is_empty() {
+    //         return Ok("Unknown".to_string());
+    //     }
+
+    //     Ok(os_output.trim_end().to_string())
+    // }
+
+    // https://support.apple.com/en-us/109033
+    // The previous method of determining the operating system name does not work in macOS 26.x
+    fn os_name() -> Result<String, MIDError> {
+        let version = run_shell_command("sw_vers", ["-productVersion"])?;
+
+        if version.is_empty() {
             return Ok("Unknown".to_string());
         }
 
-        Ok(os_output.trim_end().to_string())
+        let versions = [
+            ("26.", "Tahoe"),
+            ("15.", "Sequoia"),
+            ("14.", "Sonoma"),
+            ("13.", "Ventura"),
+            ("12.", "Monterey"),
+            ("11.", "Big Sur"),
+            ("10.15.", "Catalina"),
+            ("10.14.", "Mojave"),
+            ("10.13.", "High Sierra"),
+            ("10.12.", "Sierra"),
+        ];
+
+        for (prefix, name) in versions {
+            if version.starts_with(prefix) {
+                return Ok(name.to_string());
+            }
+        }
+
+        Ok("Unknown".to_string())
     }
 
     fn bytes_to_gigabytes(bytes: u64) -> u8 {
@@ -147,7 +179,7 @@ impl AdditionalData {
     }
 
     fn model_name() -> Result<String, MIDError> {
-        let system_profiler_output = run_shell_comand(
+        let system_profiler_output = run_shell_command(
             "sh",
             [
                 "-c",
@@ -165,6 +197,5 @@ impl AdditionalData {
 
 #[cfg(target_os = "macos")]
 pub(crate) fn get_additional_data() -> Result<AdditionalData, MIDError> {
-    let data = AdditionalData::new();
-    Ok(data)
+    Ok(AdditionalData::new())
 }

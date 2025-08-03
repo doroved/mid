@@ -14,6 +14,9 @@ Utilizes the most static system parameters possible to generate reliable device 
 
 ## Change Log
 
+**v3.0.4** - August 3, 2025
+- Changed the function for determining the operating system name
+
 **v3.0.3** - July 17, 2025
 - Added `model_name` to `mid::additional_data`
 
