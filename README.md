@@ -14,6 +14,9 @@ Utilizes the most static system parameters possible to generate reliable device 
 
 ## Change Log
 
+**v3.0.7** - August 4, 2025
+- Fixed a typo in the function name `run_shell_comand` for Linux and Windows
+
 **v3.0.6** - August 4, 2025
 - Added `chip_short` to `mid::additional_data`, which contains the short name of the processor.
 ```
