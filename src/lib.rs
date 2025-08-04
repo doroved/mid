@@ -43,6 +43,7 @@ pub struct AdditionalData {
     pub os_version: String,
     pub os_full: String,
     pub chip: String,
+    pub chip_short: String,
     pub memsize: u8,
     pub cpu_core_count: u8,
     pub languages: Vec<String>,
@@ -119,10 +120,12 @@ pub fn data(key: &str) -> Result<MidData, MIDError> {
 /// let additional_data = mid::additional_data().unwrap();
 /// println!("Username: {}", additional_data.username);
 /// println!("Hostname: {}", additional_data.hostname);
+/// println!("Model Name: {}", additional_data.model_name);
 /// println!("OS Name: {}", additional_data.os_name);
 /// println!("OS Version: {}", additional_data.os_version);
 /// println!("OS Full: {}", additional_data.os_full);
 /// println!("Chip: {}", additional_data.chip);
+/// println!("Chip Short: {}", additional_data.chip_short);
 /// println!("Memory Size: {}", additional_data.memsize);
 /// println!("CPU Core Count: {}", additional_data.cpu_core_count);
 /// println!("Languages: {:?}", additional_data.languages);

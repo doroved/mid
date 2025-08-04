@@ -72,15 +72,16 @@ impl AdditionalData {
         let sysctl_data = Self::sysctl_data().unwrap();
         let sysctl_lines: Vec<&str> = sysctl_data.trim().split('\n').collect();
 
-        let username = sysctl_lines.first().unwrap().to_string();
-        let hostname = sysctl_lines.get(1).unwrap().to_string();
+        let username = sysctl_lines[0].to_string();
+        let hostname = sysctl_lines[1].to_string();
         let model_name = Self::model_name().unwrap();
         let os_name = Self::os_name().unwrap();
-        let os_version = sysctl_lines.get(2).unwrap().to_string();
+        let os_version = sysctl_lines[2].to_string();
         let os_full = format!("{os_name} {os_version}");
-        let chip = sysctl_lines.get(3).unwrap().to_string();
-        let memsize = Self::bytes_to_gigabytes(sysctl_lines.get(4).unwrap().parse().unwrap());
-        let cpu_core_count = sysctl_lines.get(5).unwrap().parse().unwrap();
+        let chip = sysctl_lines[3].to_string();
+        let chip_short = Self::format_chip_name(sysctl_lines[3]);
+        let memsize = Self::bytes_to_gigabytes(sysctl_lines[4].parse().unwrap());
+        let cpu_core_count = sysctl_lines[5].parse().unwrap();
         let languages = Self::languages().unwrap();
 
         Self {
@@ -91,6 +92,7 @@ impl AdditionalData {
             os_version,
             os_full,
             chip,
+            chip_short,
             memsize,
             cpu_core_count,
             languages,
@@ -192,6 +194,16 @@ impl AdditionalData {
             .to_string();
 
         Ok(model_name)
+    }
+
+    fn format_chip_name(chip: &str) -> String {
+        let chip_lower = chip.to_lowercase();
+
+        match chip_lower.as_str() {
+            c if c.contains("apple") => c.replace("apple", "").trim().to_string(),
+            c if c.contains("intel") => "Intel".to_string(),
+            _ => chip_lower,
+        }
     }
 }
 
