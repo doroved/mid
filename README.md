@@ -14,6 +14,14 @@ Utilizes the most static system parameters possible to generate reliable device 
 
 ## Change Log
 
+**v3.0.6** - August 4, 2025
+- Added `chip_short` to `mid::additional_data`, which contains the short name of the processor.
+```
+Example:
+chip -> Apple M1 Pro || intel(r) core(tm) i7-4750hq cpu @ 2.00ghz
+chip_short -> m1 pro || Intel
+```
+
 **v3.0.4** - August 3, 2025
 - Changed the function for determining the operating system name
 
