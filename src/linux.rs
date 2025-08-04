@@ -9,7 +9,7 @@ use crate::utils::run_shell_command;
 
 #[cfg(target_os = "linux")]
 pub(crate) fn get_mid_result() -> Result<String, MIDError> {
-    let machine_output = run_shell_comand(
+    let machine_output = run_shell_command(
         "sh",
         [
             "-c",
