@@ -26,4 +26,4 @@ jobs:
       - name: Run tests
         run: cargo test ${{ matrix.args }} -- --nocapture
       - name: Get system_profiler
-        run: system_profiler SPHardwareDataType
+        run: system_profiler SPHardwareDataType SPSecureElementDataType
