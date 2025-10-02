@@ -12,6 +12,11 @@
 
 ## История изменений
 
+**v4.0.0** - 2 октября, 2025
+
+> [!IMPORTANT]
+> `Provisioning UDID` был [исключён](https://github.com/doroved/mid/blob/48f556b5cd2bbdbd09e5b224aeffc28ad7cd8a70/src/macos.rs#L24) из набора данных для создания хеша mac-устройств. Это произошло потому, что при запуске приложения на MacOS Arm через Rosetta 2, значение `Provisioning UDID` становится равным Hardware UUID, вместо того чтобы быть уникальным. Используйте эту версию только для новых проектов или обновите хеши устройств ваших текущих пользователей.
+
 **v3.0.7** - Август 4, 2025
 - Исправлена опечатка в названии функции `run_shell_comand` для Linux и Windows
 
@@ -73,7 +78,7 @@ system_profiler SPHardwareDataType
 
 - **Hardware UUID**: Этот параметр представляет уникальный идентификатор аппаратного обеспечения (UUID) компьютера или устройства. Он служит для обеспечения уникальной идентификации конкретной единицы в различных системах и средах.
 
-- **Provisioning UDID**: Этот параметр представляет уникальный идентификатор устройства (UDID), который может использоваться в процессе предоставления или настройки устройства, обычно в корпоративной или управляемой среде.
+- ~~**Provisioning UDID**: Этот параметр представляет уникальный идентификатор устройства (UDID), который может использоваться в процессе предоставления или настройки устройства, обычно в корпоративной или управляемой среде.~~
 
 ```bash
 system_profiler SPSecureElementDataType
@@ -108,7 +113,7 @@ system_profiler SPSecureElementDataType
 
 ```toml
 [dependencies]
-mid = "3.0.2"
+mid = "4.0.0"
 ```
 
 Или установить с помощью Cargo CLI
@@ -136,7 +141,7 @@ let mid_data = mid::data("mySecretKey").unwrap();
 ```
 
 ```
-MacOS пример: MidData { key: "mySecretKey", result: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "SEID"], hash: "3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977" }
+MacOS пример: MidData { key: "mySecretKey", result: ["ModelNumber", "SerialNumber", "HardwareUUID", "SEID"], hash: "3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977" }
 ```
 
 ### Вывести в консоль MID key/result/hash в режиме `debug_assertions`
@@ -148,7 +153,7 @@ mid::print("mySecretKey");
 ```
 MacOS пример:
 MID.print[key]: mySecretKey
-MID.print[result]: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "SEID"]
+MID.print[result]: ["ModelNumber", "SerialNumber", "HardwareUUID", "SEID"]
 MID.print[hash]: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
 ```
 
@@ -166,7 +171,7 @@ println!("{:?}", additional_data);
 ```
 
 ```
-AdditionalData { username: "doroved", hostname: "MacBook-Pro--doroved.local", model_name: "MacBook Pro", os_name: "Sonoma", os_version: "14.5", os_full: "Sonoma 14.5", chip: "Apple M1 Pro", memsize: 16, cpu_core_count: 8, languages: ["ru-RU", "bg-RU", "en-RU"] }
+AdditionalData { username: "doroved", hostname: "MacBook-Pro--doroved.local", model_name: "MacBook Pro", os_name: "Sequoia", os_version: "15.7", os_full: "Sequoia 15.7", chip: "Apple M1 Pro", chip_short: "m1 pro", memsize: 16, cpu_core_count: 8, languages: ["ru-RU", "bg-RU", "en-RU"] }
 ```
 
 ## Подписывайтесь на мой Х

@@ -14,6 +14,11 @@ Utilizes the most static system parameters possible to generate reliable device 
 
 ## Change Log
 
+**v4.0.0** - October 2, 2025
+
+> [!IMPORTANT]
+> `Provisioning UDID` has been [removed](https://github.com/doroved/mid/blob/48f556b5cd2bbdbd09e5b224aeffc28ad7cd8a70/src/macos.rs#L24) from the dataset for creating Mac device hashes. This happened because when running the application on MacOS Arm through Rosetta 2, the value of `Provisioning UDID` becomes equal to the Hardware UUID, instead of being unique. **Use this version only for new projects or update the device hashes of your current users.**
+
 **v3.0.7** - August 4, 2025
 - Fixed a typo in the function name `run_shell_comand` for Linux and Windows
 
@@ -42,7 +47,7 @@ chip_short -> m1 pro || Intel
 **v3.0.0** - September 18, 2024
 
 > [!IMPORTANT]
-> `Platform ID` has been removed from the mac device hash dataset because after upgrading from macos 14.x to 15.0, it [changed](https://github.com/doroved/mid/blob/d2587cc51f5bf406df7f84ba420e84942b022e23/src/macos.rs#L25), causing the device hash to change. Use this version only for new projects or update the device hashes of your current users.
+> `Platform ID` has been removed from the mac device hash dataset because after upgrading from macos 14.x to 15.0, it [changed](https://github.com/doroved/mid/blob/d2587cc51f5bf406df7f84ba420e84942b022e23/src/macos.rs#L25), causing the device hash to change. **Use this version only for new projects or update the device hashes of your current users.**
 
 **v2.1.0** - June 30, 2024
 
@@ -75,7 +80,7 @@ The [command](https://ss64.com/osx/system_profiler.html) returns information abo
 
 - **Hardware UUID**: This parameter represents the hardware UUID of the computer or device. It serves to provide unique identification of a specific unit across different systems and environments.
 
-- **Provisioning UDID**: This parameter represents the device's unique device identifier (UDID), which can be used in the provisioning process or device setup, usually in a corporate or managed environment.
+- ~~**Provisioning UDID**: This parameter represents the device's unique device identifier (UDID), which can be used in the provisioning process or device setup, usually in a corporate or managed environment.~~
 
 ```bash
 system_profiler SPSecureElementDataType
@@ -110,7 +115,7 @@ Add the dependency to Cargo.toml
 
 ```toml
 [dependencies]
-mid = "3.0.2"
+mid = "4.0.0"
 ```
 
 Or install using Cargo CLI
@@ -138,7 +143,7 @@ let mid_data = mid::data("mySecretKey").unwrap();
 ```
 
 ```
-MacOS example: MidData { key: "mySecretKey", result: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "SEID"], hash: "3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977" }
+MacOS example: MidData { key: "mySecretKey", result: ["ModelNumber", "SerialNumber", "HardwareUUID", "SEID"], hash: "3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977" }
 ```
 
 ### Output the MID key/result/hash to the console in `debug_assertions` mode
@@ -150,7 +155,7 @@ mid::print("mySecretKey");
 ```
 MacOS example:
 MID.print[key]: mySecretKey
-MID.print[result]: ["ModelNumber", "SerialNumber", "HardwareUUID", "ProvisioningUDID", "SEID"]
+MID.print[result]: ["ModelNumber", "SerialNumber", "HardwareUUID", "SEID"]
 MID.print[hash]: 3f9af06fd78d3390ef35e059623f58af03b7f6ca91690f5af031b774fd541977
 ```
 
@@ -168,7 +173,7 @@ println!("{:?}", additional_data);
 ```
 
 ```
-AdditionalData { username: "doroved", hostname: "MacBook-Pro--doroved.local", model_name: "MacBook Pro", os_name: "Sonoma", os_version: "14.5", os_full: "Sonoma 14.5", chip: "Apple M1 Pro", memsize: 16, cpu_core_count: 8, languages: ["ru-RU", "bg-RU", "en-RU"] }
+AdditionalData { username: "doroved", hostname: "MacBook-Pro--doroved.local", model_name: "MacBook Pro", os_name: "Sequoia", os_version: "15.7", os_full: "Sequoia 15.7", chip: "Apple M1 Pro", chip_short: "m1 pro", memsize: 16, cpu_core_count: 8, languages: ["ru-RU", "bg-RU", "en-RU"] }
 ```
 
 ## Subscribe to my X
