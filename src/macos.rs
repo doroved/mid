@@ -21,7 +21,8 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
         "Model Number",
         "Serial Number",
         "Hardware UUID",
-        "Provisioning UDID",
+        // If running on macOS ARM through Rosetta, then "Provisioning UDID" == "Hardware UUID", OTHERWISE it is a unique value
+        // "Provisioning UDID",
         // After upgrading to macos 15 Sequoia, this changed. For example, was n5b2m00417820000, became n5b2m004c7ed0000
         // "Platform ID",
         "SEID",
