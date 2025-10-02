@@ -211,3 +211,23 @@ impl AdditionalData {
 pub(crate) fn get_additional_data() -> Result<AdditionalData, MIDError> {
     Ok(AdditionalData::new())
 }
+
+#[cfg(target_os = "macos")]
+#[allow(dead_code)]
+pub(crate) fn is_running_under_rosetta() -> bool {
+    let command = "uname -m && arch -arm64 uname -m";
+    match run_shell_command("sh", ["-c", command]) {
+        Ok(output) => {
+            output.lines().next() == Some("x86_64") // true - Rosetta, false - Apple Silicon
+        }
+        Err(_) => false, // Intel
+    }
+
+    // Results from Github Action
+    // MacOS Intel
+    // arch; uname -m; uname -p; arch -x86_64 uname -m; arch -x86_64 uname -p; arch -arm64 uname -m; arch -arm64 uname -p
+    // i386  x86_64    i386      x86_64                 i386                   arch: Unknown architecture: arm64
+    // MacOS Apple Silicon
+    // arch; uname -m; uname -p; arch -x86_64 uname -m; arch -x86_64 uname -p; arch -arm64 uname -m; arch -arm64 uname -p
+    // arm64 arm64     arm       x86_64                 i386                   arm64                 arm
+}

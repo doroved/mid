@@ -18,9 +18,7 @@ use serde::{Deserialize, Serialize};
 #[cfg(target_os = "linux")]
 use linux::get_mid_result;
 #[cfg(target_os = "macos")]
-use macos::get_additional_data;
-#[cfg(target_os = "macos")]
-use macos::get_mid_result;
+use macos::{get_additional_data, get_mid_result, is_running_under_rosetta};
 #[cfg(target_os = "windows")]
 use windows::get_mid_result;
 
@@ -162,19 +160,26 @@ pub fn print(key: &str) {
 #[test]
 fn test_mid_operations() {
     match get("mykey") {
-        Ok(mid) => debug!("MID.get: {}", mid),
-        Err(err) => debug!("MID.get[error]: {}", err),
+        Ok(mid) => debug!("MID.get: {}\n", mid),
+        Err(err) => debug!("MID.get[error]: {}\n", err),
     }
 
     match data("mykey") {
-        Ok(log_data) => debug!("MID.data: {:?}", log_data),
-        Err(err) => debug!("MID.data[error]: {}", err),
+        Ok(log_data) => debug!("MID.data: {:?}\n", log_data),
+        Err(err) => debug!("MID.data[error]: {}\n", err),
     }
 
     #[cfg(target_os = "macos")]
     match additional_data() {
-        Ok(log_data) => debug!("MID.additional_data: {:?}", log_data),
-        Err(err) => debug!("MID.additional_data[error]: {}", err),
+        Ok(log_data) => debug!("MID.additional_data: {:?}\n", log_data),
+        Err(err) => debug!("MID.additional_data[error]: {}\n", err),
+    }
+
+    #[cfg(target_os = "macos")]
+    if is_running_under_rosetta() {
+        debug!("MID.is_running_under_rosetta: true\n");
+    } else {
+        debug!("MID.is_running_under_rosetta: false\n");
     }
 
     print("mykey");
