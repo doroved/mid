@@ -119,22 +119,6 @@ impl AdditionalData {
         Ok(languages)
     }
 
-    // fn os_name() -> Result<String, MIDError> {
-    //     let os_output = run_shell_command(
-    //         "sh",
-    //         [
-    //             "-c",
-    //             r#"awk '/SOFTWARE LICENSE AGREEMENT FOR macOS/' '/System/Library/CoreServices/Setup Assistant.app/Contents/Resources/en.lproj/OSXSoftwareLicense.rtf' | awk -F 'macOS ' '{print $NF}' | awk '{print substr($0, 0, length($0)-1)}'"#,
-    //         ],
-    //     )?;
-
-    //     if os_output.is_empty() {
-    //         return Ok("Unknown".to_string());
-    //     }
-
-    //     Ok(os_output.trim_end().to_string())
-    // }
-
     // https://support.apple.com/en-us/109033
     // The previous method of determining the operating system name does not work in macOS 26.x
     fn os_name() -> Result<String, MIDError> {
@@ -214,7 +198,7 @@ pub(crate) fn get_additional_data() -> Result<AdditionalData, MIDError> {
 
 #[cfg(target_os = "macos")]
 #[allow(dead_code)]
-pub(crate) fn is_running_under_rosetta() -> bool {
+pub(crate) fn check_running_under_rosetta() -> bool {
     let command = "uname -m && arch -arm64 uname -m";
     match run_shell_command("sh", ["-c", command]) {
         Ok(output) => {
@@ -222,12 +206,12 @@ pub(crate) fn is_running_under_rosetta() -> bool {
         }
         Err(_) => false, // Intel
     }
-
-    // Results from Github Action
-    // MacOS Intel
-    // arch; uname -m; uname -p; arch -x86_64 uname -m; arch -x86_64 uname -p; arch -arm64 uname -m; arch -arm64 uname -p
-    // i386  x86_64    i386      x86_64                 i386                   arch: Unknown architecture: arm64
-    // MacOS Apple Silicon
-    // arch; uname -m; uname -p; arch -x86_64 uname -m; arch -x86_64 uname -p; arch -arm64 uname -m; arch -arm64 uname -p
-    // arm64 arm64     arm       x86_64                 i386                   arm64                 arm
 }
+
+// Results from Github Action
+// MacOS Intel
+// arch; uname -m; uname -p; arch -x86_64 uname -m; arch -x86_64 uname -p; arch -arm64 uname -m; arch -arm64 uname -p
+// i386  x86_64    i386      x86_64                 i386                   arch: Unknown architecture: arm64
+// MacOS Apple Silicon
+// arch; uname -m; uname -p; arch -x86_64 uname -m; arch -x86_64 uname -p; arch -arm64 uname -m; arch -arm64 uname -p
+// arm64 arm64     arm       x86_64                 i386                   arm64                 arm

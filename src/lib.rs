@@ -18,7 +18,10 @@ use serde::{Deserialize, Serialize};
 #[cfg(target_os = "linux")]
 use linux::get_mid_result;
 #[cfg(target_os = "macos")]
-use macos::{get_additional_data, get_mid_result, is_running_under_rosetta};
+#[allow(unused)]
+use macos::check_running_under_rosetta;
+#[cfg(target_os = "macos")]
+use macos::{get_additional_data, get_mid_result};
 #[cfg(target_os = "windows")]
 use windows::get_mid_result;
 
@@ -133,6 +136,22 @@ pub fn additional_data() -> Result<AdditionalData, MIDError> {
     get_additional_data()
 }
 
+/// Check if the current process is running under Rosetta.
+///
+/// # Example
+///
+/// ```
+/// if mid::is_running_under_rosetta() {
+///     println!("Running under Rosetta");
+/// } else {
+///     println!("Not running under Rosetta");
+/// }
+/// ```
+#[cfg(all(target_os = "macos", feature = "check_rosetta"))]
+pub fn is_running_under_rosetta() -> bool {
+    check_running_under_rosetta()
+}
+
 /// Output the MID key/result/hash to the console in `debug_assertions` mode.
 ///
 /// `MID key` - The secret key for hashing
@@ -173,13 +192,6 @@ fn test_mid_operations() {
     match additional_data() {
         Ok(log_data) => debug!("MID.additional_data: {:?}\n", log_data),
         Err(err) => debug!("MID.additional_data[error]: {}\n", err),
-    }
-
-    #[cfg(target_os = "macos")]
-    if is_running_under_rosetta() {
-        debug!("MID.is_running_under_rosetta: true\n");
-    } else {
-        debug!("MID.is_running_under_rosetta: false\n");
     }
 
     print("mykey");

@@ -13,10 +13,18 @@ categories = ["authentication", "config", "accessibility"]
 [lib]
 doctest = false
 
+[[example]]
+name = "rosetta"
+path = "example/main.rs"
+required-features = ["serde", "serde_json", "check_rosetta"]
+
 [dependencies]
 hex = "0.4.3"
 hmac-sha256 = "1.1.12"
-serde = { version = "1.0.219", features = ["derive"], optional = true }
+serde = { version = "1.0.228", features = ["derive"], optional = true }
+serde_json = { version = "1.0.145", optional = true }
 
 [features]
 serde = ["dep:serde"]
+serde_json = ["dep:serde_json"]
+check_rosetta = []
