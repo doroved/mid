@@ -218,7 +218,7 @@ pub(crate) fn is_running_under_rosetta() -> bool {
     let command = "uname -m && arch -arm64 uname -m";
     match run_shell_command("sh", ["-c", command]) {
         Ok(output) => {
-            output.lines().next() == Some("x86_64") // true - Rosetta, false - Apple Silicon
+            output.lines().next() == Some("x86_64") && output.lines().nth(1) == Some("arm64") // true - Rosetta, false - Apple Silicon
         }
         Err(_) => false, // Intel
     }
