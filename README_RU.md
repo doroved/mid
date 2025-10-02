@@ -17,6 +17,8 @@
 > [!IMPORTANT]
 > `Provisioning UDID` был [исключён](https://github.com/doroved/mid/blob/48f556b5cd2bbdbd09e5b224aeffc28ad7cd8a70/src/macos.rs#L24) из набора данных для создания хеша mac-устройств. Это произошло потому, что при запуске приложения на MacOS Arm через Rosetta 2, значение `Provisioning UDID` становится равным Hardware UUID, вместо того чтобы быть уникальным. Используйте эту версию только для новых проектов или обновите хеши устройств ваших текущих пользователей.
 
+Запустите `bash ./test_rosetta.sh` на ветке check_rosetta для тестирования.
+
 **v3.0.7** - Август 4, 2025
 - Исправлена опечатка в названии функции `run_shell_comand` для Linux и Windows
 
