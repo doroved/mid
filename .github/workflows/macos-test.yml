@@ -27,5 +27,3 @@ jobs:
         run: cargo test ${{ matrix.args }} -- --nocapture
       - name: Get system_profiler
         run: system_profiler SPHardwareDataType
-      - name: Check architecture
-        run: arch; uname -m; uname -p; arch -x86_64 uname -m; arch -x86_64 uname -p; arch -arm64 uname -m; arch -arm64 uname -p

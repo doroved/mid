@@ -14,9 +14,9 @@ categories = ["authentication", "config", "accessibility"]
 doctest = false
 
 [[example]]
-name = "rosetta"
+name = "example"
 path = "example/main.rs"
-required-features = ["serde_json", "check_rosetta"]
+required-features = ["serde", "serde_json"]
 
 [dependencies]
 hex = "0.4.3"
@@ -27,4 +27,3 @@ serde_json = { version = "1.0.145", optional = true }
 [features]
 serde = ["dep:serde"]
 serde_json = ["dep:serde_json"]
-check_rosetta = []
