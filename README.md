@@ -17,7 +17,7 @@ Utilizes the most static system parameters possible to generate reliable device 
 **v4.0.0** - October 2, 2025
 
 > [!IMPORTANT]
-> `Provisioning UDID` has been [removed](https://github.com/doroved/mid/blob/48f556b5cd2bbdbd09e5b224aeffc28ad7cd8a70/src/macos.rs#L24) from the dataset for creating Mac device hashes. This happened because when running the application on MacOS Arm through Rosetta 2, the value of `Provisioning UDID` becomes equal to the Hardware UUID, instead of being unique. **Use this version only for new projects or update the device hashes of your current users.**
+> `Provisioning UDID` has been [removed](https://github.com/doroved/mid/blob/d6504fe6e10150cd40dbe246ea72058997fbe55b/src/macos.rs#L24) from the dataset for creating Mac device hashes. This happened because when running the application on MacOS Arm through Rosetta 2, the value of `Provisioning UDID` becomes equal to the Hardware UUID, instead of being unique. **Use this version only for new projects or update the device hashes of your current users.**
 
 Run `bash ./test_rosetta.sh` on check_rosetta branch for testing.
 
