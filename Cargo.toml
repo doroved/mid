@@ -16,7 +16,7 @@ doctest = false
 [[example]]
 name = "rosetta"
 path = "example/main.rs"
-required-features = ["serde", "serde_json", "check_rosetta"]
+required-features = ["serde_json", "check_rosetta"]
 
 [dependencies]
 hex = "0.4.3"
