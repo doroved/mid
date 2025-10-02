@@ -23,6 +23,8 @@ jobs:
         run: rustup target add $(echo "${{ matrix.args }}" | sed 's/--target //')
       - name: Build Rosetta
         run: cargo build --example rosetta --release ${{ matrix.args }} --features "serde serde_json check_rosetta" --verbose
+      - name: Run Build
+        run: ./target/$(echo "${{ matrix.args }}" | sed 's/--target //')/release/examples/rosetta
       - name: Run tests
         run: cargo test ${{ matrix.args }} -- --nocapture
       - name: Get system_profiler
