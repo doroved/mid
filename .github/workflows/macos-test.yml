@@ -19,8 +19,10 @@ jobs:
     name: Build (${{ matrix.name }})
     steps:
       - uses: actions/checkout@v3
-      # - name: Build
-      #   run: cargo build ${{ matrix.args }} --verbose
+      - name: Install Rust target
+        run: rustup target add $(echo "${{ matrix.args }}" | sed 's/--target //')
+      - name: Build
+        run: cargo build ${{ matrix.args }} --verbose
       - name: Run tests
         run: cargo test ${{ matrix.args }} -- --nocapture
       - name: Get system_profiler
