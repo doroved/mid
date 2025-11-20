@@ -5,6 +5,7 @@
 **Made with ❤️ for [Tauri](https://tauri.app)**
 
 [README RU](./README_RU.md)
+
 [CHANGELOG](./CHANGELOG.md)
 
 # mid
