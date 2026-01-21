@@ -9,6 +9,7 @@ repository = "https://github.com/doroved/mid"
 license = "MIT OR Apache-2.0"
 keywords = ["hwid", "machineid", "hardware-id", "machineuid", "uuid"]
 categories = ["authentication", "config", "accessibility"]
+exclude = ["ios_example", "Mid.xcframework", ".github", "build_ios.sh"]
 
 [lib]
 crate-type = ["lib", "staticlib"]
