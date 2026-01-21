@@ -32,11 +32,8 @@ fn process_output(output_str: &str) -> String {
         }
     }
 
-    mid_result
-        .iter()
-        .map(|s| s.as_str())
-        .collect::<Vec<&str>>()
-        .join("|")
-        .trim()
-        .to_string()
+    let mut result: Vec<&str> = mid_result.iter().map(|s| s.as_str()).collect();
+    result.sort();
+
+    result.join("|").trim().to_string()
 }
