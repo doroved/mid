@@ -1,6 +1,6 @@
 [package]
 name = "mid"
-version = "5.0.0"
+version = "5.0.1"
 edition = "2024"
 authors = ["doroved"]
 description = "Creating a Machine ID hash for MacOS/Windows/Linux/iOS"
@@ -9,7 +9,11 @@ repository = "https://github.com/doroved/mid"
 license = "MIT OR Apache-2.0"
 keywords = ["hwid", "machineid", "hardware-id", "machineuid", "uuid"]
 categories = ["authentication", "config", "accessibility"]
-exclude = ["ios_example", "Mid.xcframework", ".github", "build_ios.sh"]
+include = [
+    "src/**/*",
+    "Cargo.toml",
+    "README.md",
+]
 
 [lib]
 crate-type = ["lib", "staticlib"]

@@ -1,5 +1,8 @@
 # Change Log
 
+**v5.0.1** - January 21, 2026
+- Excluded image from crate to reduce package size.
+
 **v5.0.0** - January 21, 2026
 
 > [!IMPORTANT]
