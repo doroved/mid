@@ -1,5 +1,13 @@
 # Change Log
 
+**v5.0.0** - January 21, 2026
+
+> [!IMPORTANT]
+> The machine ID for Linux will change in this version. **Use this version only for new projects or update the device hashes of your current users.**
+
+- Added support for iOS.
+- Added an additional source for obtaining the identifier in Linux via `/sys/class/dmi/id/product_uuid`.
+
 **v4.0.0** - October 2, 2025
 
 > [!IMPORTANT]

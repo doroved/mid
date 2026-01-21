@@ -1,13 +1,9 @@
-#[cfg(target_os = "macos")]
+#![cfg(target_os = "macos")]
+
 use crate::errors::MIDError;
-
-#[cfg(target_os = "macos")]
 use crate::utils::run_shell_command;
-
-#[cfg(target_os = "macos")]
 use crate::AdditionalData;
 
-#[cfg(target_os = "macos")]
 pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let system_profiler_output = run_shell_command(
         "sh",
@@ -37,7 +33,6 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     Ok(combined_string)
 }
 
-#[cfg(target_os = "macos")]
 fn process_output(output_str: &str, targets: &[&str]) -> String {
     let mut result = Vec::new();
 
@@ -60,14 +55,12 @@ fn process_output(output_str: &str, targets: &[&str]) -> String {
     result.join("|")
 }
 
-#[cfg(target_os = "macos")]
 impl Default for AdditionalData {
     fn default() -> Self {
         Self::new()
     }
 }
 
-#[cfg(target_os = "macos")]
 impl AdditionalData {
     pub fn new() -> Self {
         let sysctl_data = Self::sysctl_data().unwrap();
@@ -192,7 +185,6 @@ impl AdditionalData {
     }
 }
 
-#[cfg(target_os = "macos")]
 pub(crate) fn get_additional_data() -> Result<AdditionalData, MIDError> {
     Ok(AdditionalData::new())
 }

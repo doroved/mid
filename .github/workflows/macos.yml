@@ -9,13 +9,25 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      matrix:
+        include:
+          - platform: macos-15
+            args: "--target aarch64-apple-darwin"
+            name: macOS Apple
+          - platform: macos-15-intel
+            args: "--target x86_64-apple-darwin"
+            name: macOS Intel
 
+    name: Build (${{ matrix.name }})
     steps:
       - uses: actions/checkout@v3
+      - name: Install Rust target
+        run: rustup target add $(echo "${{ matrix.args }}" | sed 's/--target //')
       - name: Build
-        run: cargo build --verbose
+        run: cargo build ${{ matrix.args }} --verbose
       - name: Run tests
-        run: cargo test -- --nocapture
-      - name: Get system_profiler
+        run: cargo test ${{ matrix.args }} -- --nocapture
+      - name: Get system metrics
         run: system_profiler SPHardwareDataType SPSecureElementDataType

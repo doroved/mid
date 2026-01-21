@@ -1,19 +1,15 @@
-#[cfg(target_os = "linux")]
+#![cfg(target_os = "linux")]
+
 use std::collections::HashSet;
-
-#[cfg(target_os = "linux")]
 use crate::errors::MIDError;
-
-#[cfg(target_os = "linux")]
 use crate::utils::run_shell_command;
 
-#[cfg(target_os = "linux")]
 pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let machine_output = run_shell_command(
         "sh",
         [
             "-c",
-            r#"hostnamectl status | awk '/Machine ID:/ {print $3}'; cat /var/lib/dbus/machine-id || true; cat /etc/machine-id || true"#,
+            r#"hostnamectl status | awk '/Machine ID:/ {print $3}'; cat /var/lib/dbus/machine-id || true; cat /etc/machine-id || true; cat /sys/class/dmi/id/product_uuid || true"#,
         ],
     )?;
 
@@ -26,17 +22,17 @@ pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     Ok(combined_string)
 }
 
-#[cfg(target_os = "linux")]
 fn process_output(output_str: &str) -> String {
-    let mut md5_hashes = HashSet::new();
+    let mut mid_result = HashSet::new();
 
     for line in output_str.to_lowercase().lines() {
-        if line.len() == 32 && line.chars().all(|c| c.is_ascii_hexdigit()) {
-            md5_hashes.insert(line.to_string());
+        let clean_line = line.trim().replace("-", "");
+        if !clean_line.is_empty() {
+            mid_result.insert(clean_line);
         }
     }
 
-    md5_hashes
+    mid_result
         .iter()
         .map(|s| s.as_str())
         .collect::<Vec<&str>>()

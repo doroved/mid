@@ -1,10 +1,8 @@
-#[cfg(target_os = "windows")]
-use crate::errors::MIDError;
+#![cfg(target_os = "windows")]
 
-#[cfg(target_os = "windows")]
+use crate::errors::MIDError;
 use crate::utils::run_shell_command;
 
-#[cfg(target_os = "windows")]
 pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let combined_output = run_shell_command(
         "powershell",

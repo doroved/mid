@@ -5,16 +5,20 @@
 //! ```
 
 mod errors;
+mod ios;
 mod linux;
 mod macos;
 mod utils;
 mod windows;
 
 use errors::MIDError;
+#[cfg(not(target_os = "ios"))]
 use hmac_sha256::HMAC;
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
+#[cfg(target_os = "ios")]
+use ios::get_mid_result;
 #[cfg(target_os = "linux")]
 use linux::get_mid_result;
 #[cfg(target_os = "macos")]
@@ -89,18 +93,35 @@ pub fn data(key: &str) -> Result<MidData, MIDError> {
         return Err(MIDError::EmptyMidKey);
     }
 
-    match get_mid_result() {
+    #[cfg(target_os = "ios")]
+    let mid_result_data = get_mid_result(key);
+    #[cfg(not(target_os = "ios"))]
+    let mid_result_data = get_mid_result();
+
+    match mid_result_data {
         Ok(mid) => {
-            let mid_result: Vec<String> = mid.split('|').map(|s| s.to_string()).collect();
+            #[cfg(target_os = "ios")]
+            {
+                Ok(MidData {
+                    key: String::from(key),
+                    result: vec![],
+                    hash: mid,
+                })
+            }
 
-            let hmac_result = HMAC::mac(mid.as_bytes(), key.as_bytes());
-            let mid_hash = hex::encode(hmac_result);
+            #[cfg(not(target_os = "ios"))]
+            {
+                let mid_result: Vec<String> = mid.split('|').map(|s| s.to_string()).collect();
 
-            Ok(MidData {
-                key: String::from(key),
-                result: mid_result,
-                hash: mid_hash,
-            })
+                let hmac_result = HMAC::mac(mid.as_bytes(), key.as_bytes());
+                let mid_hash = hex::encode(hmac_result);
+
+                Ok(MidData {
+                    key: String::from(key),
+                    result: mid_result,
+                    hash: mid_hash,
+                })
+            }
         }
         Err(err) => Err(err),
     }
@@ -176,4 +197,42 @@ fn test_mid_operations() {
     }
 
     print("mykey");
+}
+
+#[cfg(target_os = "ios")]
+pub mod ffi {
+    use super::get;
+    use std::ffi::{CStr, CString};
+    use std::os::raw::c_char;
+
+    #[unsafe(no_mangle)]
+    pub extern "C" fn mid_get(key: *const c_char) -> *mut c_char {
+        if key.is_null() {
+            return std::ptr::null_mut();
+        }
+
+        let c_str = unsafe { CStr::from_ptr(key) };
+        let key_str = match c_str.to_str() {
+            Ok(s) => s,
+            Err(_) => return std::ptr::null_mut(),
+        };
+
+        match get(key_str) {
+            Ok(mid) => match CString::new(mid) {
+                Ok(c_res) => c_res.into_raw(),
+                Err(_) => std::ptr::null_mut(),
+            },
+            Err(_) => std::ptr::null_mut(),
+        }
+    }
+
+    #[unsafe(no_mangle)]
+    pub extern "C" fn mid_free_string(s: *mut c_char) {
+        if s.is_null() {
+            return;
+        }
+        unsafe {
+            let _ = CString::from_raw(s);
+        }
+    }
 }

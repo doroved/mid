@@ -1,0 +1,4 @@
+module Mid {
+    header "mid.h"
+    export *
+}

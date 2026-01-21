@@ -4,15 +4,32 @@
 
 **Made with ❤️ for [Tauri](https://tauri.app)**
 
-[README RU](./README_RU.md)
+[README RU](./README.ru.md)
 
-[CHANGELOG](./CHANGELOG.md)
+## Latest Change Log
+
+**v5.0.0** - January 21, 2026
+
+> [!IMPORTANT]
+> The machine ID for Linux will change in this version. **Use this version only for new projects or update the device hashes of your current users.**
+
+- Added support for iOS.
+- Added an additional source for obtaining the identifier in Linux via `/sys/class/dmi/id/product_uuid`.
+
+[Full Change Log](./CHANGELOG.md)
 
 # mid
 
-Creating a Machine ID hash for MacOS/Windows/Linux.
+Creating a Machine ID hash.
 
 Utilizes the most static system parameters possible to generate reliable device hashes for licensing your software.
+
+## Supported Platforms
+
+- [x] MacOS
+- [x] Windows
+- [x] Linux
+- [x] iOS
 
 List of parameters that are used on each platform.
 
@@ -59,13 +76,19 @@ The command returns information about the Secure Element. This element is used t
 
 > **Unfortunately this parameter is subject to user modification and no reliable solution for Linux has been found yet.**
 
+## iOS
+
+- **Keychain**: The identifier is generated randomly (SHA-256 of Nanoid + Timestamp) and stored in the Keychain. It persists across app reinstallations on real devices.
+
+[iOS Instructions](./IOS_INSTRUCTIONS.md)
+
 ## Installation
 
 Add the dependency to Cargo.toml
 
 ```toml
 [dependencies]
-mid = "4.0.0"
+mid = "5.0.0"
 ```
 
 Or install using Cargo CLI
