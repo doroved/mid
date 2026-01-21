@@ -1,6 +1,6 @@
 # Инструкция по использованию mid на iOS
 
-![iOS Example App](mid_example_ios.png)
+<img src="mid_example_ios.png" width="300" alt="iOS Example App" />
 
 Эта библиотека позволяет генерировать уникальный идентификатор устройства (Machine ID) на iOS, используя **Keychain**.
 
