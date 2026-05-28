@@ -5,10 +5,14 @@
 //! ```
 
 mod errors;
+#[cfg(target_os = "ios")]
 mod ios;
+#[cfg(target_os = "linux")]
 mod linux;
+#[cfg(target_os = "macos")]
 mod macos;
 mod utils;
+#[cfg(target_os = "windows")]
 mod windows;
 
 use errors::MIDError;

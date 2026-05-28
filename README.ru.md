@@ -96,7 +96,7 @@ system_profiler SPSecureElementDataType
 
 ```toml
 [dependencies]
-mid = "5.0.1"
+mid = "5.1.0"
 ```
 
 Или установить с помощью Cargo CLI

@@ -1,5 +1,3 @@
-#![cfg(target_os = "windows")]
-
 use smbioslib::*;
 
 use crate::errors::MIDError;

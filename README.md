@@ -98,7 +98,7 @@ Add the dependency to Cargo.toml
 
 ```toml
 [dependencies]
-mid = "5.0.1"
+mid = "5.1.0"
 ```
 
 Or install using Cargo CLI

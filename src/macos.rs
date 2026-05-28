@@ -1,8 +1,6 @@
-#![cfg(target_os = "macos")]
-
+use crate::AdditionalData;
 use crate::errors::MIDError;
 use crate::utils::run_shell_command;
-use crate::AdditionalData;
 
 pub(crate) fn get_mid_result() -> Result<String, MIDError> {
     let system_profiler_output = run_shell_command(

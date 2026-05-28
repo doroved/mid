@@ -1,5 +1,3 @@
-#![cfg(target_os = "ios")]
-
 use crate::errors::MIDError;
 use nanoid::nanoid;
 use security_framework::passwords::{get_generic_password, set_generic_password};

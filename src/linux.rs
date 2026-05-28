@@ -1,5 +1,3 @@
-#![cfg(target_os = "linux")]
-
 use std::collections::HashSet;
 
 use crate::errors::MIDError;
