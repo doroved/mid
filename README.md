@@ -64,21 +64,27 @@ The command returns information about the Secure Element. This element is used t
 
 ## Windows
 
-[PowerShell](https://en.wikipedia.org/wiki/PowerShell) - expandable automation tool. Parameters used:
+System information is read directly from [SMBIOS](https://www.dmtf.org/standards/smbios) tables via the `GetSystemFirmwareTable` Win32 API — no shell processes are spawned. Parameters used:
 
-- `powershell -command "Get-WmiObject Win32_ComputerSystemProduct"`: Returns the unique product identifier (UUID) of the computer. Usually associated with the computer's motherboard. In rare cases, it may change after replacing or reinstalling the motherboard or after changing the device's BIOS/UEFI.
+- **System UUID** (SMBIOS Type 1): The unique product identifier of the computer. Usually associated with the computer's motherboard. In rare cases, it may change after replacing or reinstalling the motherboard or after changing the device's BIOS/UEFI.
 
-- `powershell -command "Get-WmiObject Win32_BIOS"`: Returns the computer's BIOS serial number. It usually remains constant and does not change.
+- **BIOS Serial Number** (SMBIOS Type 1): The computer's BIOS serial number. It usually remains constant and does not change.
 
-- `powershell -command "Get-WmiObject Win32_BaseBoard"`: Returns the serial number of the computer's baseboard. It usually remains constant and does not change.
+- **Baseboard Serial Number** (SMBIOS Type 2): The serial number of the computer's baseboard. It usually remains constant and does not change.
 
-- `powershell -command "Get-WmiObject Win32_Processor"`: Returns the computer's processor identifier. It should remain unchanged, except in cases of processor replacement.
+- **Processor ID** (SMBIOS Type 4): The computer's processor identifier. It should remain unchanged, except in cases of processor replacement.
 
 ## Linux
 
-- [machine-id](https://man7.org/linux/man-pages/man5/machine-id.5.html): A machine identifier (ID) that is used to uniquely identify a computer on Linux systems.
+System information is read directly from filesystem — no shell processes are spawned. Sources used:
 
-> **Unfortunately this parameter is subject to user modification and no reliable solution for Linux has been found yet.**
+- [`/etc/machine-id`](https://man7.org/linux/man-pages/man5/machine-id.5.html): A machine identifier (ID) that is used to uniquely identify a computer on Linux systems.
+
+- `/var/lib/dbus/machine-id`: An alternative location for the machine identifier, used on some distributions.
+
+- `/sys/class/dmi/id/product_uuid`: The system product UUID from DMI/SMBIOS tables (requires root access).
+
+> **Unfortunately these parameters are subject to user modification and no reliable solution for Linux has been found yet.**
 
 ## iOS
 
