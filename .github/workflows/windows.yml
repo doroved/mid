@@ -17,11 +17,11 @@ jobs:
         run: cargo build --verbose
       - name: Run tests
         run: cargo test -- --nocapture
-      - name: Get system metrics
+      - name: Get system metrics (WMI reference)
         run: |
           $csproduct = Get-WmiObject Win32_ComputerSystemProduct | Select-Object -ExpandProperty UUID
           $bios = Get-WmiObject Win32_BIOS | Select-Object -ExpandProperty SerialNumber
           $baseboard = Get-WmiObject Win32_BaseBoard | Select-Object -ExpandProperty SerialNumber
           $cpu = Get-WmiObject Win32_Processor | Select-Object -ExpandProperty ProcessorId
-          "$csproduct|$bios|$baseboard|$cpu"
+          "WMI: $csproduct|$bios|$baseboard|$cpu"
         shell: powershell

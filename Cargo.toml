@@ -7,12 +7,12 @@ description = "Creating a Machine ID hash for MacOS/Windows/Linux/iOS"
 readme = "README.md"
 repository = "https://github.com/doroved/mid"
 license = "MIT OR Apache-2.0"
-keywords = ["hwid", "machineid", "hardware-id", "machineuid", "uuid"]
-categories = ["authentication", "config", "accessibility"]
+keywords = ["hardware-id", "hwid", "machineid", "machineuid", "uuid"]
+categories = ["accessibility", "authentication", "config"]
 include = [
-    "src/**/*",
-    "Cargo.toml",
-    "README.md",
+  "Cargo.toml",
+  "README.md",
+  "src/**/*",
 ]
 
 [lib]
@@ -31,10 +31,13 @@ serde = { version = "1.0.228", features = ["derive"], optional = true }
 serde_json = { version = "1.0.145", optional = true }
 
 [target.'cfg(target_os = "ios")'.dependencies]
-security-framework = "3.5.1"
 core-foundation = "0.10.1"
 nanoid = "0.4.0"
+security-framework = "3.5.1"
 sha2 = "0.10.9"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+smbios-lib = "0.9"
 
 [features]
 serde = ["dep:serde"]
