@@ -17,5 +17,11 @@ jobs:
         run: cargo build --verbose
       - name: Run tests
         run: cargo test -- --nocapture
-      - name: Get machine-id from multiple sources
-        run: hostnamectl status | awk '/Machine ID:/ {print $3}'; cat /var/lib/dbus/machine-id || true; cat /etc/machine-id || true; cat /sys/class/dmi/id/product_uuid || true;
+      - name: Read machine-id files directly
+        run: |
+          echo "=== /etc/machine-id ==="
+          cat /etc/machine-id || echo "not available"
+          echo "=== /var/lib/dbus/machine-id ==="
+          cat /var/lib/dbus/machine-id || echo "not available"
+          echo "=== /sys/class/dmi/id/product_uuid ==="
+          cat /sys/class/dmi/id/product_uuid || echo "not available (requires root)"
