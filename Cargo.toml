@@ -1,6 +1,6 @@
 [package]
 name = "mid"
-version = "5.1.0"
+version = "5.1.1"
 edition = "2024"
 description = "Creating a Machine ID hash for MacOS/Windows/Linux/iOS"
 readme = "README.md"
