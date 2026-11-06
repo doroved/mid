@@ -8,17 +8,12 @@
 
 ## Latest Change Log
 
-**v5.0.1** - January 21, 2026
+**v5.1.0** - November 6, 2026
 
-- Excluded image from crate to reduce package size.
-
-**v5.0.0** - January 21, 2026
-
-> [!IMPORTANT]
-> The machine ID for Linux will change in this version. **Use this version only for new projects or update the device hashes of your current users.**
-
-- Added support for iOS.
-- Added an additional source for obtaining the identifier in Linux via `/sys/class/dmi/id/product_uuid`.
+- **Windows:** Replaced PowerShell/WMI calls with direct SMBIOS table reading via `smbios-lib` (`GetSystemFirmwareTable` Win32 API) — no external shell processes are spawned, while preserving the same hardware ID format and hash.
+- **Linux:** Replaced shell commands (`sh`, `hostnamectl`, `awk`, `cat`) with direct file reading (`/etc/machine-id`, `/var/lib/dbus/machine-id`, `/sys/class/dmi/id/product_uuid`).
+- **macOS:** Added `Golden Gate` codename support for macOS 27 in `mid::additional_data`.
+- Updated dependencies.
 
 [Full Change Log](./CHANGELOG.md)
 

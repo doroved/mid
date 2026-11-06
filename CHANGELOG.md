@@ -1,6 +1,14 @@
 # Change Log
 
+**v5.1.0** - November 6, 2026
+
+- **Windows:** Replaced PowerShell/WMI calls with direct SMBIOS table reading via `smbios-lib` (`GetSystemFirmwareTable` Win32 API) — no external shell processes are spawned, while preserving the same hardware ID format and hash.
+- **Linux:** Replaced shell commands (`sh`, `hostnamectl`, `awk`, `cat`) with direct file reading (`/etc/machine-id`, `/var/lib/dbus/machine-id`, `/sys/class/dmi/id/product_uuid`).
+- **macOS:** Added `Golden Gate` codename support for macOS 27 in `mid::additional_data`.
+- Updated dependencies.
+
 **v5.0.1** - January 21, 2026
+
 - Excluded image from crate to reduce package size.
 
 **v5.0.0** - January 21, 2026
@@ -19,10 +27,13 @@
 Run `bash ./test_rosetta.sh` on check_rosetta branch for testing.
 
 **v3.0.7** - August 4, 2025
+
 - Fixed a typo in the function name `run_shell_comand` for Linux and Windows
 
 **v3.0.6** - August 4, 2025
+
 - Added `chip_short` to `mid::additional_data`, which contains the short name of the processor.
+
 ```
 Example:
 chip -> Apple M1 Pro || intel(r) core(tm) i7-4750hq cpu @ 2.00ghz
@@ -30,9 +41,11 @@ chip_short -> m1 pro || Intel
 ```
 
 **v3.0.4** - August 3, 2025
+
 - Changed the function for determining the operating system name
 
 **v3.0.3** - July 17, 2025
+
 - Added `model_name` to `mid::additional_data`
 
 **v3.0.2** - May 3, 2025
